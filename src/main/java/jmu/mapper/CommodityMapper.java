@@ -37,10 +37,12 @@ public interface CommodityMapper {
     public boolean deleteByCommodityID(int commodityID);
 
 
-//    @Insert("INSERT INTO commodity(orderItemID, sellerID, commodityName, commodityPhoto, commodityPrice, inventory)\n" +
-//            "VALUES (#{orderItemID}, #{sellerID}, #{commodityName}, #{commodityPhoto}, #{commodityPrice}, #{inventory})")
+
 @Insert("INSERT INTO commodity(sellerID, commodityName, commodityPhoto, commodityPrice, inventory)\n" +
         "VALUES (#{sellerID}, #{commodityName}, #{commodityPhoto}, #{commodityPrice}, #{inventory})")
     public boolean insert(Commodity commodity);
 
+
+    @Select("select * from commodity where sellerID=#{sellerID}")
+    public List<Commodity> queryBySellerIDfrom(int sellerID);
 }

@@ -12,17 +12,17 @@ import java.util.List;
 public interface SellMapper {
 
     //通过sellID找本身＋seller
-    @Select("select * from sell where sellerID=#{sellerID}") //升序排列？？
-//    @Results({
-//            @Result(id = true, property = "sellID", column = "sellID"),
-//            @Result(property = "sellerID", column = "sellerID"),
-//            @Result(property = "sellCondition", column = "sellCondition"),
-//            @Result(property = "sellMoney", column = "sellMoney"),
-//            @Result(property = "seller", column = "sellerID",
-//            javaType = jmu.vo.Seller.class,
-//            one = @One(select="jmu.mapper.SellerMapper.queryBySellerID",
-//            fetchType = FetchType.LAZY))
-//    })
+    @Select("select * from sell where sellerID=#{sellerID} order by sellCondition ASC")
+    @Results({
+            @Result(id = true, property = "sellID", column = "sellID"),
+            @Result(property = "sellerID", column = "sellerID"),
+            @Result(property = "sellCondition", column = "sellCondition"),
+            @Result(property = "sellMoney", column = "sellMoney"),
+            @Result(property = "seller", column = "sellerID",
+            javaType = jmu.vo.Seller.class,
+            one = @One(select="jmu.mapper.SellerMapper.queryBySellerIDfrom",
+            fetchType = FetchType.LAZY))
+    })
     public List<Sell> queryBySellerID(int sellerID);
 
 
@@ -36,5 +36,7 @@ public interface SellMapper {
             "VALUES (#{sellerID}, #{sellCondition}, #{sellMoney})")
     public boolean insert(Sell sell);
 
+    @Select("select * from sell where sellerID=#{sellerID} order by sellCondition ASC")
+    public List<Sell> queryBySellerIDfrom(int sellerID);
 
 }

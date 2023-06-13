@@ -20,6 +20,4 @@ public class Receiver {
 
     //一个收货人--一个区
     private County county;
-
-
 }

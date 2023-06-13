@@ -11,6 +11,4 @@ public class Sell {
 
     //一个优惠--一个商家
     private Seller seller;
-
-
 }

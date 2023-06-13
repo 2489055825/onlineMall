@@ -44,6 +44,8 @@ public interface OrdersMapper {
             "and orders.orderID = orderitem.orderID\n")
     public List<Orders> queryBySellerID(int sellerID);
 
+
+
     @Select("select * from orders, orderitem\n" +
             "where orderitem.sellerID=#{sellerID}\n" +
             "and orders.orderID = orderitem.orderID\n" +
@@ -62,6 +64,10 @@ public interface OrdersMapper {
             "and orderitem.orderitemState='已收货'")
     public List<Orders> queryBySellerIDAndStateGiven(int sellerID); //Given为已收货
 
-
+    //通过商家id找所有订单
+    @Select("select * from orders, orderitem\n" +
+            "where orderitem.sellerID=#{sellerID}\n" +
+            "and orders.orderID = orderitem.orderID\n")
+    public List<Orders> queryBySellerIDfrom(int sellerID);
 
 }

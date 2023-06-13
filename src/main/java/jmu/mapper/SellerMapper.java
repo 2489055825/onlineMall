@@ -12,19 +12,24 @@ import java.util.List;
 @Mapper
 @Repository
 public interface SellerMapper {
-
-//    seller+ (sellerID)sell 通过商家ID找优惠  一个商家--多个优惠
     @Select("select * from seller where sellerID=#{sellerID}")
-//    @Results({
-//            @Result(id = true, property = "sellID", column = "sellID"),
-//            @Result(property = "sellerID", column = "sellerID"),
-//            @Result(property = "commodities", column = "commodities"),
-//            @Result(property = "sellMoney", column = "sellMoney"),
-//            @Result(property = "sells", column = "sellerID",
-//                    javaType = jmu.vo.Sell.class,
-//                    many = @Many(select="jmu.mapper.SellMapper.queryBySellerID",
-//                            fetchType = FetchType.LAZY))
-//    })
+    @Results({
+            @Result(id = true, property = "sellerID", column = "sellerID"),
+            @Result(property = "shopName", column = "shopName"),
+
+            @Result(property = "orderItemList", column = "sellerID",
+                    javaType = List.class,
+                    many = @Many(select="jmu.mapper.OrdersMapper.queryBySellerIDfrom",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "sellList", column = "sellerID",
+                    javaType = List.class,
+                    many = @Many(select="jmu.mapper.SellMapper.queryBySellerIDfrom",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "commodityList", column = "sellerID",
+                    javaType = List.class,
+                    many = @Many(select="jmu.mapper.CommodityMapper.queryBySellerIDfrom",
+                            fetchType = FetchType.LAZY))
+    })
     public Seller queryBySellerID(int sellerID);
 
     @Update("update seller\n" +
@@ -32,4 +37,6 @@ public interface SellerMapper {
             "where sellerID=#{sellerID}")
     public boolean updateBySellerID(Seller seller);
 
+    @Select("select * from seller where sellerID=#{sellerID}")
+    public Seller queryBySellerIDfrom(int sellerID);
 }

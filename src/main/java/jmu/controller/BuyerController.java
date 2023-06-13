@@ -37,7 +37,7 @@ public class BuyerController {
         }else{
             commodityList = commodityService.queryAll();
         }
-        model.addAttribute("commodityList", commodityList)
+        model.addAttribute("commodityList", commodityList);
         return "";
     }
 
@@ -45,7 +45,7 @@ public class BuyerController {
     public String commodityDetail(@RequestParam("commodityID") int commodityID,
                                         Model model){
         Commodity commodity = commodityService.queryByCommodityID(commodityID);
-        model.addAttribute("commodity", commodity)
+        model.addAttribute("commodity", commodity);
         return "";
     }
 
@@ -67,7 +67,7 @@ public class BuyerController {
         orderItem.setOrderItemState(null);
         boolean flag = orderItemServcie.insert(orderItem);
         if(!flag){//返回插入失败页面
-            return ""
+            return "";
         }
         model.addAttribute("orderItem", orderItem);
         return "";
@@ -95,13 +95,13 @@ public class BuyerController {
 
         boolean flag = orderItemServcie.insert(orderItem);
         if(!flag){//返回插入失败页面
-            return ""
+            return "";
         }
 
         List<Receiver> receiverList = receiverService.queryByBuyerID(buyerID);
 
         model.addAttribute("orderItem", orderItem);
-        model.addAttribute("receiverList", receiverList)
+        model.addAttribute("receiverList", receiverList);
         return "";
     }
 
