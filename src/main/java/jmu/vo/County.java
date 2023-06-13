@@ -10,9 +10,7 @@ public class County {
     private String countyName;
     private int cityID;
 
-
     private City city;
-    private Province province;
     private List<Receiver> receiverList;
 
 }

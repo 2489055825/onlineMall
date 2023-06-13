@@ -1,6 +1,7 @@
 package jmu.mapper;
 
 import jmu.vo.OrderItem;
+import jmu.vo.Orders;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -35,5 +36,8 @@ public interface OrderItemMapper {
 
     @Select("select * from orderitem where orderItemID=#{orderItemID}")
     public List<OrderItem> queryByOrderItemID(int orderItemID);
+
+
+
 
 }
