@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class OrderItem {
-    private int orderItem;
+    private int orderItemID;
     private int sellerID;
     private int commodityID;
     private int orderID;

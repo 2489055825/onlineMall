@@ -1,6 +1,7 @@
 package jmu.controller;
 
 import jmu.vo.Commodity;
+import jmu.vo.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,30 @@ public class BuyerController {
         model.addAttribute("commodity", commodity)
         return "";
     }
+
+    @RequestMapping(value = "/addCart", method = RequestMethod.GET)
+    public String addCart(@RequestParam("commodityID") int commodityID,
+                          @RequestParam("OrderItemAmount") int OrderItemAmount,
+                                  Model model){
+        Commodity commodity = commodityService.queryByCommodityID(commodityID);
+        float money = commodity.getCommodityPrice()*OrderItemAmount;
+        float FreightInsurance = (float) (money*0.01);
+        float allMoney = money+FreightInsurance;
+        OrderItem orderItem = new OrderItem();
+        orderItem.setSellerID(commodity.getSellerID());
+        orderItem.setCommodityID(commodity.getCommodityID());
+        orderItem.setOrderID(0);
+        orderItem.setOrderItemAmount(OrderItemAmount);
+        orderItem.setFreightInsurance(FreightInsurance);
+        orderItem.setShoppingCart(1);
+        orderItem.setAllMoney(allMoney);
+        orderItem.setOrderItemState(null);
+
+        model.addAttribute("orderItem", orderItem);
+        return "";
+    }
+
+
 
 
 }

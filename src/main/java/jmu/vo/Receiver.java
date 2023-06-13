@@ -8,6 +8,7 @@ import java.util.List;
 public class Receiver {
     private int receiverID;
     private int buyerID;
+    private int countyID;
     private String addressDetail;
     private String receiverName;
 

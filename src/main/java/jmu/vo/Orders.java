@@ -8,6 +8,7 @@ import java.util.List;
 public class Orders {
     private int orderID;
     private int buyerID;
+    private int receiverID;
     private float finalMoney;
     private String orderTime;
 

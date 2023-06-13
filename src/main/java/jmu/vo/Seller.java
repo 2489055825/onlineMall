@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Seller {
     private int sellerID;
-    private int orderItemID ;
+
     private String shopName;
 
     //一个商家--多个商品
