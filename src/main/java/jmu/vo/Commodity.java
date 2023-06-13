@@ -17,8 +17,6 @@ public class Commodity {
     //一个商品--一个商家
     private Seller seller;
 
-    //一个商品--一个订单商品
-    private OrderItem orderItem;
-
-
+    //一个商品--多个订单商品
+    private List<OrderItem> orderItemList;
 }

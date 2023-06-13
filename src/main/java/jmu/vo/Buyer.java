@@ -8,7 +8,8 @@ import java.util.List;
 public class Buyer {
     private int buyerID;
 
+    private List<Receiver> receiverList;
     //一个买家--多个订单
-    private List<Orders> orders;
+    private List<Orders> ordersList;
 
 }

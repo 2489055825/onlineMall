@@ -13,7 +13,7 @@ public class Orders {
     private String orderTime;
 
     //一个订单--多个订单商品
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItemList;
 
     //一个订单--一个收货人
     private Receiver receiver;

@@ -9,10 +9,7 @@ public class Province {
     private int provinceID;
     private String provinceName;
 
-    //多收货 多区 多市
-    private List<Receiver> receivers;
-    private List<City> cities;
-    private List<County> counties;
+    private List<City> cityList;
 
 
 }

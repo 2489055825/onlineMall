@@ -16,10 +16,11 @@ public class OrderItem {
     private float allMoney;
     private String orderItemState;
 
+    //一个订单商品--一个商家
+    private Seller seller;
     //一个订单商品--一个订单
     private Orders orders;
-    //一个订单商品--一个商家
-    private Sell sell;
+
     //一个订单商品--一个商品
     private Commodity commodity;
 

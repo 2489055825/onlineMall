@@ -6,12 +6,13 @@ import java.util.List;
 
 @Data
 public class County {
-    private int cityID;
     private int countyID;
     private String countyName;
+    private int cityID;
+
 
     private City city;
     private Province province;
-    private List<Receiver> receivers;
+    private List<Receiver> receiverList;
 
 }
