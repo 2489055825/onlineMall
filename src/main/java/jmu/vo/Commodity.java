@@ -12,10 +12,10 @@ public class Commodity {
     private String commodityName;
     private String commodityPhoto;
     private float commodityPrice;
-    private int inventory;
+    private int inventory; //库存
 
-    //一个商品--多个商家
-    private List<Seller> sellers;
+    //一个商品--一个商家
+    private Seller seller;
 
     //一个商品--一个订单商品
     private OrderItem orderItem;
