@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>register</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="bootstrap/css/style.default.css" id="theme-stylesheet">
+</head>
+<body>
+
+<div class="page login-page">
+    <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+            <div class="row">
+                <!-- Logo & Information Panel-->
+                <div class="col-lg-6">
+                    <div class="info d-flex align-items-center">
+                        <div class="content">
+                            <div class="logo">
+                                <h1>欢迎注册</h1>
+                            </div>
+                            <p>淘小菜网购系统</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Panel    -->
+                <div class="col-lg-6 bg-white">
+                    <div class="form d-flex align-items-center">
+                        <div class="content">
+                            <form id="register-form" action="/signAndLogin/sign" method="POST">
+                            <div class="form-group">
+                                <input id="register-username" class="input-material" type="text" name="account" placeholder="请输入账号" >
+                            </div>
+                            <div class="form-group">
+                                <input id="register-password" class="input-material" type="password" name="password" placeholder="请输入密码"   >
+                            </div>
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+                                        <select id="selectedIdentity" name="identity" class="form-control"  style="width:480px;height:50px; ">
+                                            <option value="" disabled selected>请选择您的身份</option>
+                                            <option value="buyer">会员</option>
+                                            <option value="seller">卖家</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <select id="selectedCourse" name="question" class="form-control"  style="width:480px;height:50px; ">
+                                        <option value="" disabled selected>请选择您的密保问题</option>
+                                        <option value="您母亲的姓名是什么？">您母亲的姓名是什么？</option>
+                                        <option value="您父亲的出生地是哪里？">您父亲的出生地是哪里？</option>
+                                        <option value="您最喜欢的宠物的名字是什么？">您最喜欢的宠物的名字是什么？
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input id="register-answer" class="input-material" type="text" name="answer" placeholder="请输入您的密保答案">
+                            </div>
+
+                            <div class="form-group">
+                                <button id="regbtn" type="submit" name="registerSubmit" class="btn btn-primary">注册</button>
+                            </div>
+                            </form>
+                            <small>已有账号?</small><a href="login.html" class="signup">&nbsp;登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://www.jq22.com/jquery/bootstrap-4.2.1.js"></script>
+
+</body>
+</html>

@@ -30,6 +30,9 @@ spring:
   # 开发环境下关闭thymeleaf模板缓存，thymeleaf缓存默认是开启状态
   thymeleaf:
     cache: false
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, classpath:/templates/
 
 
 logging:

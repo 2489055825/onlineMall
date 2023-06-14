@@ -2,6 +2,7 @@ package jmu.mapper;
 
 import jmu.vo.Commodity;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,6 +12,25 @@ import java.util.List;
 public interface CommodityMapper {
 
     @Select("select * from commodity where commodityName like #{commodityName}")
+    @Results({
+            @Result(id = true, property = "commodityID", column = "commodityID"),
+            @Result(property = "orderItemID", column = "orderItemID"),
+            @Result(property = "sellerID", column = "sellerID"),
+            @Result(property = "commodityName", column = "commodityName"),
+            @Result(property = "commodityPhoto", column = "commodityPhoto"),
+            @Result(property = "commodityPrice", column = "commodityPrice"),
+            @Result(property = "inventory", column = "inventory"),
+
+
+            @Result(property = "seller", column = "sellerID",
+                    javaType = jmu.vo.Seller.class,
+                    one = @One(select="jmu.mapper.SellerMapper.queryBySellerIDfrom",
+                            fetchType = FetchType.LAZY)),
+//            @Result(property = "orderItemList", column = "receiverID",
+//                    javaType = List.class,
+//                    many = @Many(select="jmu.mapper.OrdersMapper.queryByReceiverIDfrom",
+//                            fetchType = FetchType.LAZY))
+    })
     public List<Commodity> queryByCommodityName(String commodityName);
 
 

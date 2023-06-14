@@ -1,0 +1,13 @@
+.card {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .card-group:not(:last-child) {
+        margin-bottom: 0;
+    }
+    .card-group:last-child .card:not(:last-child) {
+        border-radius: 0;
+        border-bottom: 0;
+    }
+}
