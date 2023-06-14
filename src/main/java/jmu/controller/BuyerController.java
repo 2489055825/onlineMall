@@ -1,6 +1,6 @@
 package jmu.controller;
 
-import jmu.service.SignAndLoginService;
+import jmu.service.*;
 import jmu.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

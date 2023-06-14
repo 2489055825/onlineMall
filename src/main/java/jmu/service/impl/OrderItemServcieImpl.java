@@ -1,12 +1,11 @@
 package jmu.service.impl;
 
 import jmu.mapper.*;
-import jmu.service.SignAndLoginService;
-import jmu.vo.User;
+import jmu.service.OrderItemServcie;
+import jmu.vo.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SignAndLoginServiceImpl implements SignAndLoginService {
-
+public class OrderItemServcieImpl implements OrderItemServcie {
     @Autowired
     private BuyerMapper buyerMapper;
     @Autowired
@@ -31,25 +30,8 @@ public class SignAndLoginServiceImpl implements SignAndLoginService {
     private UserMapper userMapper;
 
     @Override
-    public boolean sign(User user) {
-        boolean flag = userMapper.insert(user);
+    public boolean insert(OrderItem orderItem) {
+        boolean flag = orderItemMapper.insert(orderItem);
         return flag;
     }
-
-    @Override
-    public User login(String account, String password) {
-        User user = userMapper.queryByAccount(account);
-        if(!password.equals(user.getPassword())){
-            user = null;
-        }
-        return user;
-    }
-
-    @Override
-    public User findPassword(String account) {
-        User user = userMapper.queryByAccount(account);
-        return user;
-    }
-
-
 }

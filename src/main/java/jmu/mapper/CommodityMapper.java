@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CommodityMapper {
 
-    @Select("select * from commodity where commodityName=#{commodityName}")
+    @Select("select * from commodity where commodityName like #{commodityName}")
     public List<Commodity> queryByCommodityName(String commodityName);
 
     @Select("select * from commodity where commodityID=#{commodityID}")

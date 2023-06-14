@@ -1,12 +1,14 @@
 package jmu.service.impl;
 
 import jmu.mapper.*;
-import jmu.service.SignAndLoginService;
-import jmu.vo.User;
+import jmu.service.CommodityService;
+import jmu.service.ReceiverService;
+import jmu.vo.Commodity;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SignAndLoginServiceImpl implements SignAndLoginService {
+import java.util.List;
 
+public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private BuyerMapper buyerMapper;
     @Autowired
@@ -31,24 +33,22 @@ public class SignAndLoginServiceImpl implements SignAndLoginService {
     private UserMapper userMapper;
 
     @Override
-    public boolean sign(User user) {
-        boolean flag = userMapper.insert(user);
-        return flag;
+    public List<Commodity> queryByCommodityName(String commodityName) {
+        commodityName = "%" + commodityName + "%";
+        List<Commodity> commodityList = commodityMapper.queryByCommodityName(commodityName);
+        return commodityList;
     }
 
     @Override
-    public User login(String account, String password) {
-        User user = userMapper.queryByAccount(account);
-        if(!password.equals(user.getPassword())){
-            user = null;
-        }
-        return user;
+    public List<Commodity> queryAll() {
+        List<Commodity> commodityList = commodityMapper.queryAll();
+        return commodityList;
     }
 
     @Override
-    public User findPassword(String account) {
-        User user = userMapper.queryByAccount(account);
-        return user;
+    public Commodity queryByCommodityID(int commodityID) {
+        Commodity commodity = commodityMapper.queryByCommodityID(commodityID);
+        return commodity;
     }
 
 

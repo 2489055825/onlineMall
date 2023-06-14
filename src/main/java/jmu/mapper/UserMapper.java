@@ -23,7 +23,7 @@ public interface UserMapper {
 
 
     @Select("select * from user where account=#{account}")
-    public User queryByAccount(int account);
+    public User queryByAccount(String account);
 
     @Select("select * from user")
     public List<User> queryAll();
