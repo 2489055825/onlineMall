@@ -2,7 +2,10 @@ package jmu.service.impl;
 
 import jmu.mapper.*;
 import jmu.service.OrdersService;
+import jmu.vo.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class OrdersServiceImpl implements OrdersService {
     @Autowired
@@ -27,4 +30,17 @@ public class OrdersServiceImpl implements OrdersService {
     private SellMapper sellMapper;
     @Autowired
     private UserMapper userMapper;
+
+    @Override
+    public int insert(Orders order) {
+        boolean flag = ordersMapper.insertOrder(order);
+        int lastInsertID = ordersMapper.getLastInsertID();
+        return lastInsertID;
+    }
+
+    @Override
+    public List<Orders> queryByBuyerID(int buyerID) {
+        List<Orders> ordersList = ordersMapper.queryByBuyerID(buyerID);
+        return ordersList;
+    }
 }

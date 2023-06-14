@@ -35,9 +35,13 @@ public interface OrderItemMapper {
     public List<OrderItem> queryBySellerID(int sellerID);
 
     @Select("select * from orderitem where orderItemID=#{orderItemID}")
-    public List<OrderItem> queryByOrderItemID(int orderItemID);
+    public OrderItem queryByOrderItemID(int orderItemID);
 
+    @Update("update orderitem\n" +
+            "set orderID=#{lastInsertID}, shoppingCart=0\n" +
+            "where orderItemID=#{orderItemID}")
+    public boolean updateOrderIDByOrderItemID(int orderItemID, int lastInsertID);
 
-
-
+    @Select("select * from orderitem where orderID=#{orderID}")
+    public List<OrderItem> queryByOrderIDfrom(int orderID);
 }

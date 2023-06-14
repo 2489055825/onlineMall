@@ -33,6 +33,7 @@ public class ReceiverServiceImpl implements ReceiverService {
 
     @Override
     public List<Receiver> queryByBuyerID(int buyerID) {
-        return null;
+        List<Receiver> receiverList = receiverMapper.queryByBuyerID(buyerID);
+        return receiverList;
     }
 }

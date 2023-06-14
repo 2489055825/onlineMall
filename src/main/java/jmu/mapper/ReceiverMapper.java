@@ -43,4 +43,7 @@ public interface ReceiverMapper {
             "VALUES (#{countyID}, #{buyerID}, #{addressDetail}, #{receiverName})")
     public boolean insert(Receiver receiver);
 
+    @Select("select * from receiver where receiverID=#{receiverID}")
+    public Receiver queryByReceiverIDfrom(int receiverID);
+
 }

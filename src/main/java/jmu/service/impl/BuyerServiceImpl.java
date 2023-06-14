@@ -2,6 +2,7 @@ package jmu.service.impl;
 
 import jmu.mapper.*;
 import jmu.service.BuyerService;
+import jmu.vo.Buyer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BuyerServiceImpl implements BuyerService {
@@ -27,4 +28,10 @@ public class BuyerServiceImpl implements BuyerService {
     private SellMapper sellMapper;
     @Autowired
     private UserMapper userMapper;
+
+    @Override
+    public Buyer queryByBuyerID(int buyerID) {
+        Buyer buyer = buyerMapper.queryByBuyerIDfrom(buyerID);
+        return null;
+    }
 }

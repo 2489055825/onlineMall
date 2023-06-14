@@ -15,7 +15,30 @@ public interface OrdersMapper {
             "VALUES (#{receiverID}, #{buyerID}, #{finalMoney}, #{orderTime})")
     public boolean insertOrder(Orders orders);
 
+    @Select("SELECT LAST_INSERT_ID()")
+    public int getLastInsertID();
+
     @Select("select * from orders where buyerID=#{buyerID}")
+    @Results({
+            @Result(id = true, property = "orderID", column = "orderID"),
+            @Result(property = "receiverID", column = "receiverID"),
+            @Result(property = "buyerID", column = "buyerID"),
+            @Result(property = "finalMoney", column = "addressDetail"),
+            @Result(property = "orderTime", column = "orderTime"),
+
+            @Result(property = "orderItemList", column = "orderID",
+                    javaType = List.class,
+                    many = @Many(select="jmu.mapper.OrderItemMapper.queryByOrderIDfrom",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "buyer", column = "buyerID",
+                    javaType = jmu.vo.Buyer.class,
+                    one = @One(select="jmu.mapper.BuyerMapper.queryByBuyerIDfrom",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "receiver", column = "receiverID",
+                    javaType = jmu.vo.Receiver.class,
+                    one = @One(select="jmu.mapper.ReceiverMapper.queryByReceiverIDfrom",
+                            fetchType = FetchType.LAZY))
+    })
     public List<Orders> queryByBuyerID(int buyerID);
 
 

@@ -140,10 +140,11 @@ public class BuyerController {
         return "";
     }
 
+    //在我的订单找到这个人的所有order,然后显示在前端
     @RequestMapping(value = "/myOrders", method = RequestMethod.GET)
     public String myOrders(Model model){
         int buyerID = SignAndLoginController.USERSID;
-        List<Orders> ordersList = ordersService.queryByBuyer(buyerID);//orders中包含orderItem
+        List<Orders> ordersList = ordersService.queryByBuyerID(buyerID);//orders中包含orderItem
         model.addAttribute("ordersList", ordersList);
         return "";
     }
@@ -160,7 +161,7 @@ public class BuyerController {
     @RequestMapping(value = "/myOrdersUnsend", method = RequestMethod.GET)
     public String myOrdersUnsend(Model model){
         int buyerID = SignAndLoginController.USERSID;
-        List<Orders> ordersList = ordersService.queryByBuyer(buyerID);//orders中包含orderItem
+        List<Orders> ordersList = ordersService.queryByBuyerID(buyerID);//orders中包含orderItem
         List<OrderItem> IorderItemList = new ArrayList<OrderItem>();
         for(Orders orders : ordersList){
             List<OrderItem> orderItemList = orders.getOrderItemList();
@@ -177,7 +178,7 @@ public class BuyerController {
     @RequestMapping(value = "/myOrdersDelivered", method = RequestMethod.GET)
     public String myOrdersDelivered(Model model){
         int buyerID = SignAndLoginController.USERSID;
-        List<Orders> ordersList = ordersService.queryByBuyer(buyerID);//orders中包含orderItem
+        List<Orders> ordersList = ordersService.queryByBuyerID(buyerID);//orders中包含orderItem
         List<OrderItem> IorderItemList = new ArrayList<OrderItem>();
         for(Orders orders : ordersList){
             List<OrderItem> orderItemList = orders.getOrderItemList();
@@ -204,7 +205,7 @@ public class BuyerController {
     public String deleteCart(@RequestParam("orderItemID") int orderItemID,
                           Model model){
         int buyerID = SignAndLoginController.USERSID;
-        List<OrderItem> orderItemList = orderItemServcie.deleteByOrderItemID(orderItemID);
+        boolean flag = orderItemServcie.deleteByOrderItemID(orderItemID);
         return "";
     }
 
@@ -243,4 +244,5 @@ public class BuyerController {
         model.addAttribute("money", money);
         return "";
     }
+
 }

@@ -13,8 +13,10 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class SellerMapperTest {
 
+
     @Autowired
     private SellerMapper sellerMapper;
+
     @Test
     public void queryBySellerID() {
         Seller seller = sellerMapper.queryBySellerID(1);
@@ -23,11 +25,9 @@ public class SellerMapperTest {
 
     @Test
     public void updateBySellerID() {
-
     }
 
     @Test
     public void queryBySellerIDfrom() {
-
     }
 }
