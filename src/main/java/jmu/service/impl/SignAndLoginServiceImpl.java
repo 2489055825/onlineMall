@@ -4,7 +4,9 @@ import jmu.mapper.*;
 import jmu.service.SignAndLoginService;
 import jmu.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SignAndLoginServiceImpl implements SignAndLoginService {
 
     @Autowired

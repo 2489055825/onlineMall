@@ -4,9 +4,11 @@ import jmu.mapper.*;
 import jmu.service.ReceiverService;
 import jmu.vo.Receiver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReceiverServiceImpl implements ReceiverService {
     @Autowired
     private BuyerMapper buyerMapper;

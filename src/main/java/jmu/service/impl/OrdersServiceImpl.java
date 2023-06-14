@@ -4,9 +4,11 @@ import jmu.mapper.*;
 import jmu.service.OrdersService;
 import jmu.vo.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrdersServiceImpl implements OrdersService {
     @Autowired
     private BuyerMapper buyerMapper;

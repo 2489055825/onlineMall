@@ -5,9 +5,11 @@ import jmu.service.CommodityService;
 import jmu.service.ReceiverService;
 import jmu.vo.Commodity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private BuyerMapper buyerMapper;

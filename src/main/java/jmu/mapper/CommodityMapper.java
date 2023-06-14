@@ -13,8 +13,6 @@ public interface CommodityMapper {
     @Select("select * from commodity where commodityName like #{commodityName}")
     public List<Commodity> queryByCommodityName(String commodityName);
 
-    @Select("select * from commodity where commodityID=#{commodityID}")
-    public List<Commodity> queryByCommodityID(String commodityID);
 
     @Select("select * from commodity")
     public List<Commodity> queryAll();
