@@ -1,10 +1,7 @@
 package jmu.controller;
 
 import jmu.service.SignAndLoginService;
-import jmu.vo.Commodity;
-import jmu.vo.OrderItem;
-import jmu.vo.Orders;
-import jmu.vo.Receiver;
+import jmu.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +25,8 @@ public class BuyerController {
     private ReceiverService receiverService;
     @Autowired
     private OrdersService ordersService;
+    @Autowired
+    private BuyerService buyerService;
 
     @RequestMapping(value = "/searchByCommodityName", method = RequestMethod.GET)
     public String searchByCommodityName(@RequestParam("commodityName") String commodityName,
@@ -92,7 +92,6 @@ public class BuyerController {
         orderItem.setShoppingCart(0);
         orderItem.setAllMoney(allMoney);
         orderItem.setOrderItemState("未发货");
-
         boolean flag = orderItemServcie.insert(orderItem);
         if(!flag){//返回插入失败页面
             return "";
@@ -111,7 +110,7 @@ public class BuyerController {
                               Model model){
         int buyerID = SignAndLoginController.USERSID;
 
-
+        //插入order
         int allMoney = 0;
         Orders order = new Orders();
         order.setReceiverID(receiverID);
@@ -132,13 +131,116 @@ public class BuyerController {
 
         order.setOrderTime(dateString);
 
-        boolean flag = ordersService.insert(order);
-        if(!flag){//返回插入失败页面
-            return "";
+        int lastInsertID = ordersService.insert(order); //这里记得去调整select语句呜呜呜
+        for(Integer orderItemID : orderItemIDList){
+            int IorderItemID = orderItemID.intValue();
+            orderItemServcie.updateOrderIDByOrderItemID(IorderItemID,lastInsertID); //记得让shoppingCart为0
         }
 
         return "";
     }
 
+    @RequestMapping(value = "/myOrders", method = RequestMethod.GET)
+    public String myOrders(Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        List<Orders> ordersList = ordersService.queryByBuyer(buyerID);//orders中包含orderItem
+        model.addAttribute("ordersList", ordersList);
+        return "";
+    }
 
+    @RequestMapping(value="confirmReceipt", method = RequestMethod.GET)
+    public String confirmReceipt(@RequestParam("orderItemID") int orderItemID,
+                                 Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        String orderItemState = "已签收";
+        boolean flag = orderItemServcie.updateOrderItemStateByOderItemID(orderItemID,orderItemState);
+        return "";
+    }
+
+    @RequestMapping(value = "/myOrdersUnsend", method = RequestMethod.GET)
+    public String myOrdersUnsend(Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        List<Orders> ordersList = ordersService.queryByBuyer(buyerID);//orders中包含orderItem
+        List<OrderItem> IorderItemList = new ArrayList<OrderItem>();
+        for(Orders orders : ordersList){
+            List<OrderItem> orderItemList = orders.getOrderItemList();
+            for(OrderItem orderItem:orderItemList){
+                if(orderItem.getOrderItemState()=="未发货"){
+                    IorderItemList.add(orderItem);
+                }
+            }
+        }
+        model.addAttribute("IorderItemList", IorderItemList);
+        return "";
+    }
+
+    @RequestMapping(value = "/myOrdersDelivered", method = RequestMethod.GET)
+    public String myOrdersDelivered(Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        List<Orders> ordersList = ordersService.queryByBuyer(buyerID);//orders中包含orderItem
+        List<OrderItem> IorderItemList = new ArrayList<OrderItem>();
+        for(Orders orders : ordersList){
+            List<OrderItem> orderItemList = orders.getOrderItemList();
+            for(OrderItem orderItem:orderItemList){
+                if(orderItem.getOrderItemState()=="已送达" || orderItem.getOrderItemState()=="已签收"){
+                    IorderItemList.add(orderItem);
+                }
+            }
+        }
+        model.addAttribute("IorderItemList", IorderItemList);
+        return "";
+    }
+
+
+    @RequestMapping(value = "/showCart", method = RequestMethod.GET)
+    public String showCart(Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        List<OrderItem> orderItemList = orderItemServcie.queryByShoppingCart(buyerID);
+        model.addAttribute("orderItemList", orderItemList);
+        return "";
+    }
+
+    @RequestMapping(value = "/deleteCart", method = RequestMethod.GET)
+    public String deleteCart(@RequestParam("orderItemID") int orderItemID,
+                          Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        List<OrderItem> orderItemList = orderItemServcie.deleteByOrderItemID(orderItemID);
+        return "";
+    }
+
+    @RequestMapping(value = "/buyFromCart", method = RequestMethod.GET)
+    public String buyFromCart(@RequestParam("oderItemIDList") List<Integer> oderItemIDList,
+                         Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        List<Receiver> receiverList = receiverService.queryByBuyerID(buyerID);
+        List<OrderItem> orderItemList = new ArrayList<>();
+        for(Integer orderItemID : oderItemIDList){
+            int IorderItemID = orderItemID.intValue();
+            OrderItem orderItem = orderItemServcie.queryByOrderItemID(IorderItemID);
+            orderItemList.add(orderItem);
+        }
+        model.addAttribute("orderItemList", orderItemList);
+        model.addAttribute("receiverList", receiverList);
+        return "";
+    }
+
+    @RequestMapping(value = "/myExcel", method = RequestMethod.GET)
+    public String myExcel(Model model){
+        int buyerID = SignAndLoginController.USERSID;
+        int sum = 0;
+        float money = 0;
+        Buyer buyer = buyerService.queryByBuyerID(buyerID);
+        List<Orders> ordersList = ordersService.queryByBuyerID(buyerID);
+        for(Orders orders:ordersList){
+            List<OrderItem> orderItemList = orders.getOrderItemList();
+            for(OrderItem orderItem : orderItemList){
+                sum += orderItem.getOrderItemAmount();
+                money += orderItem.getAllMoney();
+            }
+        }
+        model.addAttribute("buyer", buyer);
+        model.addAttribute("sum", sum);
+        model.addAttribute("money", money);
+        return "";
+    }
 }

@@ -23,8 +23,8 @@ public interface OrderItemMapper {
             "where orderItemID=#{orderItemID}")
     public boolean updateOrderItemStateByOderItemID(int orderItemID, String orderItemState);
 
-    @Select("select * from orderitem where shoppingCart=1")
-    public List<OrderItem> queryByShoppingChart(); //查询shoppingChart=1的
+    @Select("select * from orderitem,orders where orderitem.orderID=orders.orderID and shoppingCart=1 and orders.buyerID=#{buyerID}")
+    public List<OrderItem> queryByShoppingCart(int buyerID); //查询shoppingChart=1的
 
     @Delete("DELETE\n" +
             "FROM orderitem\n" +
