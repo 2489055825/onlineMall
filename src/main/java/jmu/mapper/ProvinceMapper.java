@@ -14,5 +14,5 @@ public interface ProvinceMapper {
 
 
     @Select("select * from province where provinceID=#{provinceID}")
-    public Province queryByprovinceIDfrom(int provinceID);
+    public Province queryByProvinceIDfrom(int provinceID);
 }

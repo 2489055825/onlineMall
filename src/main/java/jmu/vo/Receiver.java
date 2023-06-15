@@ -20,4 +20,13 @@ public class Receiver {
 
     //一个收货人--一个区
     private County county;
+
+    public String getAllReceiverInformation(){
+        System.out.println(this.toString());
+        String countyName = this.county.getCountyName();
+        String cityName = this.county.getCity().getCityName();
+        String provinceName = this.county.getCity().getProvince().getProvinceName();
+        String line =  this.receiverName + "  " + provinceName  + cityName + countyName + addressDetail;
+        return line;
+    }
 }

@@ -29,7 +29,7 @@ public interface ReceiverMapper {
                             fetchType = FetchType.LAZY)),
             @Result(property = "county", column = "countyID",
                     javaType = jmu.vo.County.class,
-                    one = @One(select="jmu.mapper.CountyMapper.queryByCountyIDfrom",
+                    one = @One(select="jmu.mapper.CountyMapper.queryByCountyID",
                             fetchType = FetchType.LAZY))
     })
     public List<Receiver> queryByBuyerID(int BuyerID);

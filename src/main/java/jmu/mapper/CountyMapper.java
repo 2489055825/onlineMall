@@ -13,16 +13,16 @@ import java.util.List;
 public interface CountyMapper {
     @Select("select * from county where countyID=#{countyID}")
     @Results({
-            @Result(id = true, property = "countyID", column = "countyID"),
+            @Result(id = true, property = "countyID", column = "countyID"), //
             @Result(property = "countyName", column = "countyName"),
             @Result(property = "cityID", column = "cityID"),
 
             @Result(property = "city", column = "cityID",
                     javaType = jmu.vo.City.class,
-                    one = @One(select="jmu.mapper.CityMapper.queryByCityIDfrom",
+                    one = @One(select="jmu.mapper.CityMapper.queryByCityID",
                             fetchType = FetchType.LAZY))
     })
-    public City queryByCountyID(int countyID);
+    public County queryByCountyID(int countyID);
 
     @Select("select * from county where countyID=#{countyID}")
     public County queryByCountyIDfrom(int countyID);

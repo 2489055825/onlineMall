@@ -61,7 +61,7 @@ public interface CommodityMapper {
     public boolean insert(Commodity commodity);
 
     @Update("update commodity\n" +
-            "set inventory=#{inventory}" +
+            "set inventory=#{inventory}\n" +
             "where commodityID=#{commodityID}")
     public boolean updateInventoryByCommodityID(int commodityID, int inventory);
 

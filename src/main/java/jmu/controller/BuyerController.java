@@ -28,6 +28,8 @@ public class BuyerController {
     private OrdersService ordersService;
     @Autowired
     private BuyerService buyerService;
+    @Autowired
+    private SellerService sellerService;
 
     @RequestMapping(value = "/searchByCommodityName", method = RequestMethod.GET)
     public String searchByCommodityName(@RequestParam("commodityName") String commodityName,
@@ -71,7 +73,7 @@ public class BuyerController {
             return "";
         }
         model.addAttribute("orderItem", orderItem);
-        return "";
+        return "redirect:/buyerFunction/showCart";
     }
 
     @RequestMapping(value = "/buyNow", method = RequestMethod.GET)
@@ -88,6 +90,8 @@ public class BuyerController {
         float money = commodity.getCommodityPrice()*orderItemAmount;
         float FreightInsurance = (float) (money*0.01);
         float allMoney = money+FreightInsurance;
+
+        Seller seller = sellerService.queryBySellerID(commodity.getSellerID());
         OrderItem orderItem = new OrderItem();
         orderItem.setSellerID(commodity.getSellerID());
         orderItem.setCommodityID(commodity.getCommodityID());
@@ -96,16 +100,39 @@ public class BuyerController {
         orderItem.setShoppingCart(0);
         orderItem.setAllMoney(allMoney);
         orderItem.setOrderItemState("未发货");
+        orderItem.setCommodity(commodity);
+        orderItem.setSeller(seller);
+        System.out.println(orderItem);
         boolean flag = orderItemServcie.insert(orderItem);
         if(!flag){//返回插入失败页面
             return "";
         }
 
         List<Receiver> receiverList = receiverService.queryByBuyerID(buyerID);
+//        List<Receiver> receiverList1 = new ArrayList<>();
+//        for(Receiver receiver:receiverList){
+//            int countyID = receiver.getCountyID();
+//            County county = receiverService.queryCountyByCountyID(countyID);
+//            int cityID = county.getCityID();
+//            City city = receiverService.queryCityByCityID(cityID);
+//            county.setCity(city);
+//            int provinceID = city.getProvinceID();
+//            Province province = receiverService.queryByProvinceID(provinceID);
+//            city.setProvince(province);
+//            receiver.setCounty(county);
+//            receiverList1.add(receiver);
+//        }
+        List<OrderItem> orderItemList = new ArrayList<>();
+        orderItemList.add(orderItem);
+        model.addAttribute("orderItemList", orderItemList);
+        float allMoney1 = 0;
+        for(OrderItem orderItem1:orderItemList){
+            allMoney1 += orderItem1.getAllMoney() + orderItem1.getAllMoney()*0.01;
+        }
 
-        model.addAttribute("orderItem", orderItem);
+        model.addAttribute("allMoney1", allMoney1);
         model.addAttribute("receiverList", receiverList);
-        return "";
+        return "buyerPage-paymentConfirmation";
     }
 
     @RequestMapping(value = "/submitOrder", method = RequestMethod.GET)
@@ -201,7 +228,9 @@ public class BuyerController {
     public String showCart(Model model){
         int buyerID = SignAndLoginController.USERSID;
         List<OrderItem> orderItemList = orderItemServcie.queryByShoppingCart(buyerID);
+        List<Receiver> receiverList = receiverService.queryByBuyerID(buyerID);
         model.addAttribute("orderItemList", orderItemList);
+        model.addAttribute("receiverList", receiverList);
         return "";
     }
 

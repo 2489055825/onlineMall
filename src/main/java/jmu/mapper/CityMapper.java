@@ -19,7 +19,7 @@ public interface CityMapper {
 
             @Result(property = "province", column = "provinceID",
                     javaType = jmu.vo.Province.class,
-                    one = @One(select="jmu.mapper.ProvinceMapper.queryByprovinceIDfrom",
+                    one = @One(select="jmu.mapper.ProvinceMapper.queryByProvinceID",
                             fetchType = FetchType.LAZY))
     })
     public City queryByCityID(int cityID);
