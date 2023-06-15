@@ -46,26 +46,19 @@ public interface OrdersMapper {
     @Select("select * from orders, orderitem\n" +
             "where orderitem.sellerID=#{sellerID}\n" +
             "and orders.orderID = orderitem.orderID\n")
-//    @Results({
-//            @Result(id = true, property = "orderID", column = "orderID"),
-//            @Result(property = "buyerID", column = "buyerID"),
-//            @Result(property = "receiverID", column = "receiverID"),
-//            @Result(property = "finalMoney", column = "addressDetail"),
-//            @Result(property = "orderTime", column = "orderTime"),
-//
-//            @Result(property = "orderItemList", column = "receiverID",
-//                    javaType = List.class,
-//                    many = @Many(select="jmu.mapper.OrdersMapper.queryByReceiverIDfrom",
-//                            fetchType = FetchType.LAZY)),
-//            @Result(property = "buyer", column = "buyerID",
-//                    javaType = jmu.vo.Buyer.class,
-//                    one = @One(select="jmu.mapper.BuyerMapper.queryByBuyerIDfrom",
-//                            fetchType = FetchType.LAZY)),
-//            @Result(property = "county", column = "countyID",
-//                    javaType = jmu.vo.County.class,
-//                    one = @One(select="jmu.mapper.CountyMapper.queryByCountyIDfrom",
-//                            fetchType = FetchType.LAZY))
-//    })
+    @Results({
+            @Result(id = true, property = "orderID", column = "orderID"),
+            @Result(property = "buyerID", column = "buyerID"),
+            @Result(property = "receiverID", column = "receiverID"),
+            @Result(property = "finalMoney", column = "finalMoney"),
+            @Result(property = "orderTime", column = "orderTime"),
+
+            @Result(property = "orderItemList", column = "orderID",
+                    javaType = List.class,
+                    many = @Many(select="jmu.mapper.OrderItemMapper.queryByOrderIDfrom",
+                            fetchType = FetchType.LAZY)),
+
+    })
     public List<Orders> queryBySellerID(int sellerID);
 
     @Select("select * from orders, orderitem\n" +

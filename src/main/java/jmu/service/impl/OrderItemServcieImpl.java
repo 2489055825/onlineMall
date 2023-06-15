@@ -68,4 +68,10 @@ public class OrderItemServcieImpl implements OrderItemServcie {
         List<OrderItem> orderItemList = orderItemMapper.queryByShoppingCart(buyerID);
         return null;
     }
+
+    @Override
+    public List<OrderItem> queryBySellerID(int sellerID) {
+        List<OrderItem> orderItemList = orderItemMapper.queryBySellerID(sellerID);
+        return orderItemList;
+    }
 }

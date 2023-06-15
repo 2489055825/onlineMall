@@ -19,4 +19,6 @@ public interface ReceiverService {
     City queryCityByCityID(int cityID);
 
     Province queryByProvinceID(int provinceID);
+
+    boolean insert(Receiver receiver);
 }

@@ -56,7 +56,31 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public boolean updateInventoryByCommodityID(int commodityID, int inventory) {
         boolean flag = commodityMapper.updateInventoryByCommodityID(commodityID, inventory);
-        return false;
+        return flag;
+    }
+
+    @Override
+    public List<Commodity> queryBySellerID(int sellerID) {
+        List<Commodity> commodityList = commodityMapper.queryBySellerID(sellerID);
+        return commodityList;
+    }
+
+    @Override
+    public boolean updateCommodityByCommodityID(Commodity commodity) {
+        boolean flag = commodityMapper.updateByCommodityID(commodity);
+        return flag;
+    }
+
+    @Override
+    public boolean deleteCommodityByCommodityID(int commodityID) {
+        boolean flag = commodityMapper.deleteByCommodityID(commodityID);
+        return flag;
+    }
+
+    @Override
+    public boolean insertCommodity(Commodity commodity) {
+        Boolean flag = commodityMapper.insert(commodity);
+        return flag;
     }
 
 

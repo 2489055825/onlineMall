@@ -35,4 +35,10 @@ public class SellerServiceImpl implements SellerService {
         Seller seller = sellerMapper.queryBySellerID(sellerID);
         return seller;
     }
+
+    @Override
+    public boolean update(Seller seller) {
+        boolean flag = sellerMapper.updateBySellerID(seller);
+        return flag;
+    }
 }

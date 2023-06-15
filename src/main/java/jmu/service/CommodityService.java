@@ -16,4 +16,12 @@ public interface CommodityService {
     Commodity queryByCommodityID(int commodityID);
 
     boolean updateInventoryByCommodityID(int commodityID, int inventory);
+
+    List<Commodity> queryBySellerID(int sellerID);
+
+    boolean updateCommodityByCommodityID(Commodity commodity);
+
+    boolean deleteCommodityByCommodityID(int commodityID);
+
+    boolean insertCommodity(Commodity commodity);
 }

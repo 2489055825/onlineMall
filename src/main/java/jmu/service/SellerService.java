@@ -9,4 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SellerService {
 
     Seller queryBySellerID(int sellerID);
+
+    boolean update(Seller seller);
 }

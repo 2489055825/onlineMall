@@ -12,4 +12,6 @@ public interface OrdersService {
     int insert(Orders order);
 
     List<Orders> queryByBuyerID(int buyerID);
+
+    List<Orders> queryAllOrdersBySellerID(int sellerID);
 }

@@ -26,4 +26,7 @@ public interface CountyMapper {
 
     @Select("select * from county where countyID=#{countyID}")
     public County queryByCountyIDfrom(int countyID);
+
+    @Select("select * from county")
+    List<County> queryAll();
 }

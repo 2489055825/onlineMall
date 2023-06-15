@@ -30,6 +30,8 @@ public class BuyerController {
     private BuyerService buyerService;
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @RequestMapping(value = "/searchByCommodityName", method = RequestMethod.GET)
     public String searchByCommodityName(@RequestParam("commodityName") String commodityName,
@@ -133,6 +135,38 @@ public class BuyerController {
         model.addAttribute("allMoney1", allMoney1);
         model.addAttribute("receiverList", receiverList);
         return "buyerPage-paymentConfirmation";
+    }
+
+    @RequestMapping(value = "/showInsertReceiver", method = RequestMethod.GET)
+    public String showInsertReceiver(Model model){
+        List<Province> provinceList = provinceService.queryAllProvince();
+        List<City> cityList = provinceService.queryAllCity();
+        List<County> countyList = provinceService.queryAllCounty();
+
+        model.addAttribute("provinceList",provinceList);
+        model.addAttribute("cityList",cityList);
+        model.addAttribute("countyList",countyList);
+        return "";
+    }
+
+    @RequestMapping(value = "/insertReceiver", method = RequestMethod.GET)
+    public String insertReceiver(@RequestParam("countyID") int countyID,
+                                  @RequestParam("buyerID") int buyerID,
+                                  @RequestParam("addressDetail") String addressDetail,
+                                  @RequestParam("receiverName") String receiverName,
+                                  Model model){
+        int sellerID = SignAndLoginController.USERSID;
+        Receiver receiver = new Receiver();
+        receiver.setCountyID(countyID);
+        receiver.setBuyerID(buyerID);
+        receiver.setAddressDetail(addressDetail);
+        receiver.setReceiverName(receiverName);
+
+        boolean flag = receiverService.insert(receiver);
+        if(!flag){
+            return "";
+        }
+        return "";
     }
 
     @RequestMapping(value = "/submitOrder", method = RequestMethod.GET)

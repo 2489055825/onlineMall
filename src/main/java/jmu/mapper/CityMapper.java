@@ -27,4 +27,6 @@ public interface CityMapper {
     @Select("select * from city where cityID=#{cityID}")
     public City queryByCityIDfrom(int cityID);
 
+    @Select("select * from city")
+    public List<City> queryAll();
 }

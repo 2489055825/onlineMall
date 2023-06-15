@@ -47,7 +47,7 @@ public interface CommodityMapper {
             "commodityPhoto=#{commodityPhoto},\n" +
             "commodityPrice=#{commodityPrice}, inventory=#{inventory}" +
             "where commodityID=#{commodityID}")
-    public boolean updateByCommodityID(int commodityID);
+    public boolean updateByCommodityID(Commodity commodity);
 
     @Delete("DELETE\n" +
             "FROM commodity\n" +

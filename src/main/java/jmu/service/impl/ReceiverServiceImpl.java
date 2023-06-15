@@ -59,4 +59,10 @@ public class ReceiverServiceImpl implements ReceiverService {
         Province province = provinceMapper.queryByProvinceID(provinceID);
         return province;
     }
+
+    @Override
+    public boolean insert(Receiver receiver) {
+        boolean flag = receiverMapper.insert(receiver);
+        return flag;
+    }
 }

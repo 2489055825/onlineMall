@@ -1,15 +1,17 @@
 package jmu.service.impl;
 
 import jmu.mapper.*;
-import jmu.service.OrdersService;
-import jmu.vo.Orders;
+import jmu.service.ProvinceService;
+import jmu.vo.City;
+import jmu.vo.County;
+import jmu.vo.Province;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrdersServiceImpl implements OrdersService {
+public class ProvinceServiceImpl implements ProvinceService {
     @Autowired
     private BuyerMapper buyerMapper;
     @Autowired
@@ -34,21 +36,20 @@ public class OrdersServiceImpl implements OrdersService {
     private UserMapper userMapper;
 
     @Override
-    public int insert(Orders order) {
-        boolean flag = ordersMapper.insertOrder(order);
-        int lastInsertID = ordersMapper.getLastInsertID();
-        return lastInsertID;
+    public List<Province> queryAllProvince() {
+        List<Province> provinceList = provinceMapper.queryAll();
+        return provinceList;
     }
 
     @Override
-    public List<Orders> queryByBuyerID(int buyerID) {
-        List<Orders> ordersList = ordersMapper.queryByBuyerID(buyerID);
-        return ordersList;
+    public List<City> queryAllCity() {
+        List<City> cityList = cityMapper.queryAll();
+        return cityList;
     }
 
     @Override
-    public List<Orders> queryAllOrdersBySellerID(int sellerID) {
-        List<Orders> ordersList = ordersMapper.queryBySellerID(sellerID);
-        return ordersList;
+    public List<County> queryAllCounty() {
+        List<County> countyList = countyMapper.queryAll();
+        return countyList;
     }
 }

@@ -21,4 +21,6 @@ public interface OrderItemServcie {
     boolean updateOrderItemStateByOderItemID(int orderItemID, String orderItemState);
 
     List<OrderItem> queryByShoppingCart(int buyerID);
+
+    List<OrderItem> queryBySellerID(int sellerID);
 }
