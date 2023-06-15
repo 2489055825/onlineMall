@@ -60,7 +60,13 @@ public interface CommodityMapper {
         "VALUES (#{sellerID}, #{commodityName}, #{commodityPhoto}, #{commodityPrice}, #{inventory})")
     public boolean insert(Commodity commodity);
 
+    @Update("update commodity\n" +
+            "set inventory=#{inventory}" +
+            "where commodityID=#{commodityID}")
+    public boolean updateInventoryByCommodityID(int commodityID, int inventory);
 
     @Select("select * from commodity where sellerID=#{sellerID}")
     public List<Commodity> queryBySellerIDfrom(int sellerID);
+
+
 }

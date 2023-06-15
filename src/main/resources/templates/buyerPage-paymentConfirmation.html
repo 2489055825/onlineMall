@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+
+    <!-- 导入bootstrap的样式和js以及1.9版本以上的JQuery -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/bootstrap/jquery-3.5.1.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <link th:href="@{/bootstrap/css/payment.css}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script th:src="@{https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js}"></script>
+    <script th:src="@{https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js}"></script>
+    <![endif]-->
+
+    <title>支付确认</title>
+</head>
+<body>
+
+<!--导航栏,设置导航栏的样式为默认navbar-default，而navbar-inverse，,nav里面加上navbar-fixed-top试一下导致导航栏顶部下面以部门区域覆盖，后面我加了br换行-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my_nav" aria-expanded="false">
+                <!--兼容性使用-->
+                <span class="sr-only">Toggle navigation</span>
+                <!--当在移动访问时，右上角出现按钮，表示按钮上的三根横线-->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand" style="padding: 0px 15px 0px 15px;">
+                <img src="images/home.png" class="img-responsive" style="width:150px;height:50px;" ></img>
+            </a>
+        </div>
+
+
+        <!--导航条菜单-->
+        <div class="collapse navbar-collapse" id="my_nav">
+            <ul class="nav navbar-nav">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <li class="active"><a href="#">淘小菜网首页</a></li>
+                <li><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;  商城</a></li>
+                <li><a href="#">&nbsp; &nbsp; 活动</a></li>
+            </ul>
+
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="点击搜索您喜欢的商品" style="width: 350px"/>
+                    <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">搜索</button>
+          </span>
+                </div>
+            </form>
+            <ul class="nav navbar-nav">
+
+
+                <li><a href="#">&nbsp; &nbsp;我的订单 <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;购物车&nbsp;  <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;登录&nbsp; <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;注册&nbsp; <span  style="font-size:15px;"></span></a></li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" id="more"><font id="z">
+                        查看更多</font> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" align="center" >
+                        <li><a href="#"><span class=" icon-user" style="font-size:15px;">&nbsp;&nbsp;</span>个人中心</a></li>
+                        <li><a href="#"><span class=" icon-cog" style="font-size:15px;">&nbsp;&nbsp;</span>我的报表</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><span class=" icon-signout" style="font-size:15px;">&nbsp;&nbsp;</span>退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br>
+
+
+<!--container容器是页面左右两边预留空白的容器-->
+<!--container-fluid容器是100%宽度的容器-->
+
+<div class="container">
+    <div id="hot-products" class="carousel slide" data-ride="carousel">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h3 style="color: #333333"><b>填写并核对订单信息</b></h3>
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4><strong>确认收货人信息</strong></h4>
+            <hr>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 这里是第1个信息！！！
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">这里是第2个信息！！！
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" >添加收货地址</button>
+
+
+
+            <!--      确认订单信息-->
+            <br/><br/>
+            <h4><strong>确认订单信息</strong></h4>
+            <hr>
+
+            <div class="col-md-12">
+                <!-- 表格 table-striped-->
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="bg-primary text-white">
+
+                        <th scope="col" >商品图片</th>
+                        <th scope="col" style="width: 200px">店铺</th>
+                        </th><th></th><th>
+                        <th scope="col" style="width: 300px">商品名称</th>
+                        <th></th><th></th>
+                        <th scope="col" style="width: 200px">单价</th>
+                        <th scope="col" style="width: 200px">数量</th>
+                        <th scope="col" style="width: 200px">运费险</th>
+                        <th scope="col" style="width: 200px">小计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 名称导航条背景 -->
+                    <tr class="bg-primary text-white">
+
+                    <tr>
+                        <td><img src="images/comm1.png" width="110" height="120"></td>
+                        <td>这里是店铺名！</td>
+                        <td></td><td></td>
+                        <td>这里是商品名称！！这里是商品名称！！这里是商品名称！！</td>
+                        <!--        用来间隔的-->
+                        <td></td><td></td>
+                        <!--        end用来间隔的-->
+                        <td>¥1.50</td>
+                        <td>1</td>
+                        <td><p style="color: #FF3300" ><strong>¥2.98</strong></p></td>
+                        <td><p style="color: #FF3300" ><strong>¥298</strong></p></td>
+                    </tr>
+
+
+                    <!--      多组测试-->
+                    <tr>
+                        <td><img src="images/comm1.png" width="110" height="120"></td>
+                        <td>这里是店铺名！</td>
+                        <td></td><td></td>
+                        <td>这里是商品名称！！这里是商品名称！！这里是商品名称！！</td>
+                        <!--        用来间隔的-->
+                        <td></td><td></td>
+                        <!--        end用来间隔的-->
+                        <td>¥1.50</td>
+                        <td>1</td>
+                        <td><p style="color: #FF3300" ><strong>¥2.98</strong></p></td>
+                        <td><p style="color: #FF3300" ><strong>¥298</strong></p></td>
+                    </tr>
+                    <tr>
+                        <td><img src="images/comm1.png" width="110" height="120"></td>
+                        <td>这里是店铺名！</td>
+                        <td></td><td></td>
+                        <td>这里是商品名称！！这里是商品名称！！这里是商品名称！！</td>
+                        <!--        用来间隔的-->
+                        <td></td><td></td>
+                        <!--        end用来间隔的-->
+                        <td>¥1.50</td>
+                        <td>1</td>
+                        <td><p style="color: #FF3300" ><strong>¥2.98</strong></p></td>
+                        <td><p style="color: #FF3300" ><strong>¥298</strong></p></td>
+                    </tr>
+
+                    <!--      end多组测试-->
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--    合计总金额-->
+            <form class="text-right">
+                <p style="color: #FF3300;margin-right: 40px;font-size: large"><strong>总计：999.99</strong></p>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#add-address-modal"
+                        style="margin-right: 40px;">确认提交</button>
+                <br/><br/>
+            </form>
+        </div>
+
+
+
+        <!-- 确认订单模态框 -->
+        <div class="modal fade" id="add-address-modal" tabindex="-1" role="dialog" aria-labelledby="add-address-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="add-address-modal-label">支付确认</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">请输入支付密码</label>
+                                <input type="password" class="form-control" id="recipient-name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">确认支付</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div><!--end of container-->
+
+</body>
+</html>

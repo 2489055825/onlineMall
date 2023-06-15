@@ -53,5 +53,11 @@ public class CommodityServiceImpl implements CommodityService {
         return commodity;
     }
 
+    @Override
+    public boolean updateInventoryByCommodityID(int commodityID, int inventory) {
+        boolean flag = commodityMapper.updateInventoryByCommodityID(commodityID, inventory);
+        return false;
+    }
+
 
 }

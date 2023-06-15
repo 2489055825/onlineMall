@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+
+    <!--导入bootstrap的样式和js以及1.9版本以上的JQuery-->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/bootstrap/jquery-3.5.1.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/reset.css}"/>
+    <!--  <link rel="stylesheet" th:href="@{/Font-Awesome-3.2.1/css/font-awesome.min.css}">&lt;!&ndash;字体图标&ndash;&gt;-->
+
+    <!--[if lt IE 9]>
+    <script th:src="@{https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js}"></script>
+    <script th:src="@{https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js}"></script>
+    <![endif]-->
+
+    <title>商品详情</title>
+</head>
+<body>
+<!--导航栏,设置导航栏的样式为默认navbar-default，而navbar-inverse，,nav里面加上navbar-fixed-top试一下导致导航栏顶部下面以部门区域覆盖，后面我加了br换行-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my_nav" aria-expanded="false">
+                <!--兼容性使用-->
+                <span class="sr-only">Toggle navigation</span>
+                <!--当在移动访问时，右上角出现按钮，表示按钮上的三根横线-->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand" style="padding: 0px 15px 0px 15px;">
+                <img th:src="@{/images/home.png}" class="img-responsive" style="width:150px;height:50px;"></img>
+            </a>
+        </div>
+
+        <!--导航条菜单-->
+        <div class="collapse navbar-collapse" id="my_nav">
+            <ul class="nav navbar-nav">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <li class="active"><a href="#">淘小菜网首页</a></li>
+                <li><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;  商城</a></li>
+                <li><a href="#">&nbsp; &nbsp; 活动</a></li>
+            </ul>
+
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="点击搜索您喜欢的商品" style="width: 350px"/>
+                    <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">搜索</button>
+          </span>
+                </div>
+            </form>
+
+            <ul class="nav navbar-nav">
+                <li><a href="#">&nbsp; &nbsp;我的订单 <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;购物车&nbsp;  <span  style="font-size:15px;"></span></a></li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" id="more" style="margin-top: 1.5px;">
+                        <font id="z">查看更多</font> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" align="center" >
+                        <li><a href="#"><span class=" icon-user" style="font-size:15px;">&nbsp;&nbsp;</span>个人中心</a></li>
+                        <li><a href="#"><span class=" icon-cog" style="font-size:15px;">&nbsp;&nbsp;</span>我的报表</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><span class=" icon-signout" style="font-size:15px;">&nbsp;&nbsp;</span>退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br>
+<br><br>
+
+<!--container容器是页面左右两边预留空白的容器-->
+<!--container-fluid容器是100%宽度的容器-->
+
+<div class="container">
+    <span class="fa fa-bath"></span>
+    <i class="fa fa-address-card"></i>
+
+    <div class="page-header">
+        <p style="color: #333333;font-size: 30px" >商品详情</p>
+    </div>
+</div>
+
+<div class="center_con clearfix">
+    <div class="main_menu fl"><img th:src="@{'~/'+'images/comm1.png'}" width="380" height="400"></div>
+    <div class="goods_detail_list fr">
+        <br/>
+        <h3 th:text="${commodity.commodityName}">这里是商品名称！！这里是商品名称！！这里是商品名称！！这里是商品名称！！</h3>
+        <br/><br/>
+        <div class="prize_bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <p style="font-size: large">价格</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <p style="font-size: 30px;color: #FF3300" th:text="'¥' + ${commodity.commodityPrice}">¥200.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+        <!-- 绿色提示按钮-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-success btn-sm">全国包邮</button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-success btn-sm">运费险</button>
+                </div>
+            </div>
+        </div>
+
+<!--        <div class="goods_num clearfix">-->
+<!--            <div class="num_name fl"><p style="font-size: large">&nbsp;&nbsp;&nbsp;数量:</p></div>-->
+<!--            <table>-->
+<!--                <div class="form-group">-->
+<!--                    <div class="col-sm-3">-->
+<!--                        <input type="number" class="form-control" id="orderRank" name="orderItemAmount" value="1" style="margin-top: 5px;">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </table>-->
+<!--        </div>-->
+        <div class="goods_num clearfix">
+            <div class="num_name fl"><p style="font-size: large">&nbsp;&nbsp;&nbsp;数量:</p></div>
+            <table>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="orderRank" name="orderItemAmount" value="1" style="margin-top: 5px;">
+                    </div>
+                </div>
+            </table>
+        </div>
+
+        <div class="goods_num clearfix">
+            <div class="num_name fl"><p style="font-size: large">&nbsp;&nbsp;&nbsp;库存量:</p></div>
+            <p style="font-size: 20px;" th:text="${commodity.inventory}">199</p>
+        </div>
+
+        <div class="operate_btn">
+            <a id="buyNowBtn" th:href="@{'/buyerFunction/buyNow?commodityID=' + ${commodity.commodityID}}" class="buy_btn">立即购买</a>
+            <a id="addCartBtn" th:href="@{'/buyerFunction/addCart?commodityID=' + ${commodity.commodityID}}" class="add_cart">加入购物车</a>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                // 获取数量输入框和链接元素
+                var orderRankInput = $('#orderRank');
+                var buyNowLink = $('#buyNowBtn');
+                var addCartLink = $('#addCartBtn');
+
+                // 监听数量输入框值的变化
+                orderRankInput.on('input', function() {
+                    var orderItemAmount = orderRankInput.val();
+
+                    // 更新链接中的参数值
+                    var buyNowUrl = buyNowLink.attr('href');
+                    buyNowUrl = updateUrlParameter(buyNowUrl, 'orderItemAmount', orderItemAmount);
+                    buyNowLink.attr('href', buyNowUrl);
+
+                    var addCartUrl = addCartLink.attr('href');
+                    addCartUrl = updateUrlParameter(addCartUrl, 'orderItemAmount', orderItemAmount);
+                    addCartLink.attr('href', addCartUrl);
+                });
+
+                // 更新URL中的参数值
+                function updateUrlParameter(url, param, value) {
+                    var pattern = new RegExp('(' + param + '=).*?(&|$)');
+                    if (url.match(pattern)) {
+                        return url.replace(pattern, '$1' + value + '$2');
+                    }
+                    else {
+                        return url + (url.indexOf('?') > 0 ? '&' : '?') + param + '=' + value;
+                    }
+                }
+            });
+        </script>
+    </div>
+
+</div>
+
+</div><!--end of container-->
+</body>
+</html>

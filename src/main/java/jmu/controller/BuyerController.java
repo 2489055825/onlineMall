@@ -47,21 +47,21 @@ public class BuyerController {
                                         Model model){
         Commodity commodity = commodityService.queryByCommodityID(commodityID);
         model.addAttribute("commodity", commodity);
-        return "";
+        return "buyerPage-commodityDetail";
     }
 
     @RequestMapping(value = "/addCart", method = RequestMethod.GET)
     public String addCart(@RequestParam("commodityID") int commodityID,
-                          @RequestParam("OrderItemAmount") int OrderItemAmount,
+                          @RequestParam("orderItemAmount") int orderItemAmount,
                                   Model model){
         Commodity commodity = commodityService.queryByCommodityID(commodityID);
-        float money = commodity.getCommodityPrice()*OrderItemAmount;
+        float money = commodity.getCommodityPrice()*orderItemAmount;
         float FreightInsurance = (float) (money*0.01);
         float allMoney = money+FreightInsurance;
         OrderItem orderItem = new OrderItem();
         orderItem.setSellerID(commodity.getSellerID());
         orderItem.setCommodityID(commodity.getCommodityID());
-        orderItem.setOrderItemAmount(OrderItemAmount);
+        orderItem.setOrderItemAmount(orderItemAmount);
         orderItem.setFreightInsurance(FreightInsurance);
         orderItem.setShoppingCart(1);
         orderItem.setAllMoney(allMoney);
@@ -76,19 +76,22 @@ public class BuyerController {
 
     @RequestMapping(value = "/buyNow", method = RequestMethod.GET)
     public String buyNow(@RequestParam("commodityID") int commodityID,
-                         @RequestParam("OrderItemAmount") int OrderItemAmount,
+                         @RequestParam("orderItemAmount") int orderItemAmount,
                           Model model){
         int buyerID = SignAndLoginController.USERSID;
 
         Commodity commodity = commodityService.queryByCommodityID(commodityID);
+        int inventory = commodity.getInventory();
+        inventory -= orderItemAmount;
+        commodityService.updateInventoryByCommodityID(commodityID,inventory);
 
-        float money = commodity.getCommodityPrice()*OrderItemAmount;
+        float money = commodity.getCommodityPrice()*orderItemAmount;
         float FreightInsurance = (float) (money*0.01);
         float allMoney = money+FreightInsurance;
         OrderItem orderItem = new OrderItem();
         orderItem.setSellerID(commodity.getSellerID());
         orderItem.setCommodityID(commodity.getCommodityID());
-        orderItem.setOrderItemAmount(OrderItemAmount);
+        orderItem.setOrderItemAmount(orderItemAmount);
         orderItem.setFreightInsurance(FreightInsurance);
         orderItem.setShoppingCart(0);
         orderItem.setAllMoney(allMoney);

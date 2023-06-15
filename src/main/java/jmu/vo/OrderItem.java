@@ -9,7 +9,7 @@ public class OrderItem {
     private int orderItemID;
     private int sellerID;
     private int commodityID;
-    private int orderID;
+    private Integer orderID;
     private int orderItemAmount;
     private float freightInsurance;
     private int shoppingCart;

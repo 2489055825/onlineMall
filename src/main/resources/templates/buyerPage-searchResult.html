@@ -131,7 +131,7 @@
                         <span th:text="${commodity.getSeller().getShopName()}"></span>
                     </p>
                     <p>
-                        <a class="btn btn-primary" href="#" role="button" style="width: 220px;">查看详情</a>
+                        <a class="btn btn-primary" th:href="@{'/buyerFunction/commodityDetail?commodityID=' + ${commodity.getCommodityID()}}" role="button" style="width: 220px;">查看详情</a>
                     </p>
                 </div>
             </div>

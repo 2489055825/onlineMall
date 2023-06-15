@@ -14,4 +14,6 @@ public interface CommodityService {
     List<Commodity> queryAll();
 
     Commodity queryByCommodityID(int commodityID);
+
+    boolean updateInventoryByCommodityID(int commodityID, int inventory);
 }
