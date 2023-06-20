@@ -122,7 +122,7 @@
                 <td th:text="${orders.getOrderTime()}" style=" vertical-align: middle;">支付日期</td>
                 <td th:text="${orders.getReceiver().getAllReceiverInformation()}" style=" vertical-align: middle;">收货地址收货地址收货地址收货地址收货地址收货地址</td>
                 <td th:text="${orderItem.getOrderItemState()}" style=" vertical-align: middle;">订单状态</td>
-                <td style=" vertical-align: middle;"><button type="button" class="btn btn-default">改订单状态</button></td>
+                <td style=" vertical-align: middle;"><a th:href="'changeOrderItemState?orderItemID='+${orderItem.getOrderItemID()}"><button type="button" class="btn btn-default">修改订单状态</button></a></td>
             </tr>
 
             </tr>

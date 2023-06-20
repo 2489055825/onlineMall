@@ -70,19 +70,64 @@ public class SellerController {
 
     @RequestMapping(value = "/ordersUnsend", method = RequestMethod.GET)
     public String ordersUnsend(Model model){
+
+//        int sellerID = SignAndLoginController.USERSID;
+//        List<Orders> ordersList = ordersService.queryAllOrdersBySellerID(sellerID);//每一个order都要联系一个List<OrderItem>
+//        List<OrderItem> orderItemList = new ArrayList<>();
+//        for(Orders orders:ordersList){
+//            List<OrderItem> orderItemList1 = orders.getOrderItemList();
+//            for(OrderItem orderItem:orderItemList1){
+//                if("未发货".equals(orderItem.getOrderItemState())){
+//                    orderItemList.add(orderItem);
+//                }
+//            }
+//        }
+//        model.addAttribute("orderItemList", orderItemList);
         int sellerID = SignAndLoginController.USERSID;
-        List<Orders> ordersList = ordersService.queryAllOrdersBySellerID(sellerID);//每一个order都要联系一个List<OrderItem>
-        List<OrderItem> orderItemList = new ArrayList<>();
-        for(Orders orders:ordersList){
-            List<OrderItem> orderItemList1 = orders.getOrderItemList();
-            for(OrderItem orderItem:orderItemList1){
-                if("未发货".equals(orderItem.getOrderItemState())){
-                    orderItemList.add(orderItem);
-                }
+        List<Orders> ordersList = ordersService.queryAllOrdersBySellerID(sellerID); //每一个order都要联系一个List<OrderItem>
+//        List<OrderItem> orderItemList = new ArrayList<>();
+//        for(Orders orders:ordersList){
+//            orderItemList.addAll(orders.getOrderItemList());
+//        }
+        List<Orders> filteredOrdersList = new ArrayList<>();
+        Set<Integer> processedOrderIDs = new HashSet<>();
+
+        for (Orders orders : ordersList) {
+            int orderID = orders.getOrderID();
+            if (!processedOrderIDs.contains(orderID)) {
+                filteredOrdersList.add(orders);
+                processedOrderIDs.add(orderID);
             }
         }
-        model.addAttribute("orderItemList", orderItemList);
-        return "";
+
+        List<List<OrderItem>> orderItemListList = new ArrayList<>();
+        for(Orders orders:filteredOrdersList){
+            List<OrderItem> orderItemList = orders.getOrderItemList();
+            for(int i = 0; i < orderItemList.size(); i++){
+                OrderItem orderItem = orderItemList.get(i);
+                if(orderItem.getSellerID() != sellerID){
+                    orderItemList.remove(orderItem);
+                    i--;
+                }else if(!orderItem.getOrderItemState().equals("未发货")){
+                    orderItemList.remove(orderItem);
+                    i--;
+                }
+            }
+            orderItemListList.add(orderItemList);
+        }
+
+        for(int i = 0; i < filteredOrdersList.size(); i++){
+            filteredOrdersList.get(i).setOrderItemList(orderItemListList.get(i));
+            if(filteredOrdersList.get(i).getOrderItemList()==null){
+                filteredOrdersList.remove(i);
+            }
+        }
+
+        Seller seller = sellerService.queryBySellerID(sellerID);
+        model.addAttribute("seller", seller);
+        model.addAttribute("ordersList", filteredOrdersList);
+
+        return "sellerPage-orderUnsend";
     }
 
     @RequestMapping(value = "/changeOrderItemState", method = RequestMethod.GET)
@@ -91,7 +136,7 @@ public class SellerController {
         int sellerID = SignAndLoginController.USERSID;
         String orderItemState = "已送达";
         orderItemServcie.updateOrderItemStateByOderItemID(orderItemID,orderItemState);
-        return "";
+        return "redirect:/sellerFunction/allOrders";
     }
 
     //所有商品功能
