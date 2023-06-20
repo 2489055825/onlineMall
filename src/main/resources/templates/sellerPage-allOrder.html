@@ -8,12 +8,12 @@
     <script th:src="@{/bootstrap/jquery-3.5.1.js}"></script>
     <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
     <!--  <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css">&lt;!&ndash;字体图标&ndash;&gt;-->
+
     <!--[if lt IE 9]>
     <script th:src="@{https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js}"></script>
     <script th:src="@{https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js}"></script>
     <![endif]-->
-
-    <title>商家所商品 商家主页</title>
+    <title>商家所订单</title>
 
 
 </head>
@@ -75,66 +75,62 @@
             </div>
         </div><!-- /.container-fluid -->
         <ul class="nav nav-pills nav-justified">
-            <li class="active"><a th:href="@{/sellerFunction/showCommodity}">全部商品</a></li>
-            <li ><a th:href="@{/sellerFunction/allOrders} ">所有订单</a></li>
-            <li><a th:href="@{/sellerFunction/}">未送达订单</a></li>
-            <li ><a th:href="@{/sellerFunction/}">商家信息</a></li>
+            <li><a th:href="@{sellerPage-allCommodity.html}">全部商品</a></li>
+            <li class="active" ><a th:href="@{sellerPage-allOrder.html} ">所有订单</a></li>
+            <li><a th:href="@{sellerPage-orderUnsend.html}">未送达订单</a></li>
+            <li><a th:href="@{sellerPage-myInformation.html}">商家信息</a></li>
         </ul>
     </nav>
 
-    <div style="overflow: hidden;">
-        <p style="float: left;margin-left: 20px;color: #2f333e;font-family: 楷体;font-size:medium"><strong th:text="${seller.getShopName()}">这里放商家名！！</strong></p>
-        <!--    <button style="float: right;">这是一个Button</button>-->
-        <a th:href="@{/sellerPage-insertCommodity.html}"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#add-address-modal"
-                                                          style="float: right;margin-right: 25px;">新增商品</button></a>
 
-    </div>
+    <p style="float: left;margin-left: 20px;color: #2f333e;font-family: 楷体;font-size:medium"><strong>这里放商家名！！</strong></p>
     <br/>
-
 
     <div class="col-md-12">
         <!-- 表格 table-striped-->
         <table class="table table-striped">
             <thead>
             <tr class="bg-primary text-white">
-                <th scope="col" style="width: 150px">图片</th>
-                <th scope="col" style="width: 300px">商品名称</th>
-                <th></th><th></th>
-                <th scope="col" style="width: 150px">单价</th>
-                <th scope="col" style="width: 150px">库存</th>
-
-                <th scope="col" style="width: 200px">更新商品</th>
-                <th scope="col" style="width: 200px">删除商品</th>
+                <th scope="col" >订单ID</th>
+                <th scope="col">收货人姓名</th>
+                <th scope="col" style="width: 200px">商品名称</th>
+                <th scope="col" >商品件数</th>
+                <th scope="col" >商品单价</th>
+                <!--        这里直接显示最终的总价就好了，不然表单东西太多有点乱-->
+                <!--        <th scope="col" >运费险单价</th>-->
+                <!--        <th scope="col" >初始总价</th>-->
+                <th scope="col" >总价</th>
+                <th scope="col" >支付日期</th>
+                <th scope="col" style="width: 200px">收货地址</th>
+                <th scope="col" >订单状态</th>
+                <th scope="col" >操作</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody th:each="orders:${ordersList}" th:with="orderItemList=${orders.getOrderItemList()}">
             <!-- 名称导航条背景 -->
             <tr class="bg-primary text-white">
-
                 <!--一条记录-->
-            <tr th:each="commodity:${commodityList}">
-                <td><img th:src="'/'+${commodity.getCommodityPhoto()}" width="110" height="120"></td>
-                <td th:text="${commodity.getCommodityName()}" style=" vertical-align: middle;">这里是商品名称！！这里是商品名称！！这里是商品名称！！</td>
-                <!--        用来间隔的-->
-                <td></td><td></td>
-                <!--        end用来间隔的-->
-                <td style=" vertical-align: middle;"><p style="color: #FF3300;font-size: large" ><strong th:text="'¥'+${commodity.getCommodityPrice()}">¥2.99</strong></p></td>
-                <td th:text="${commodity.getInventory()}" style=" vertical-align: middle;">100</td>
+            <tr >
+                <td th:text="${orders.getOrderID()}" th:attr="rowspan=${orders.getOrderItemList().size()+1}" style=" vertical-align: middle;">订单ID</td>
 
-                <td style=" vertical-align: middle;"><a th:href="'showUpdateSeller?commodityID='+${commodity.getCommodityID()}"> <button type="button" class="btn btn-default">更新</button> </a></td>
-                <td style=" vertical-align: middle;"><a th:href="'deleteCommodity?commodityID='+${commodity.getCommodityID()}"> <button type="button" class="btn btn-default">删除</button></a></td>
+            <tr th:each="orderItem:${orderItemList}">
+                <td th:text="${orders.getReceiver().getReceiverName()}" style=" vertical-align: middle;">收货人姓名</td>
+                <td th:text="${orderItem.getCommodity().getCommodityName()}" style=" vertical-align: middle;">商品名称</td>
+                <td th:text="${orderItem.getOrderItemAmount()}" style=" vertical-align: middle;">件数</td>
+                <td th:text="${orderItem.getCommodity().getCommodityPrice()}" style=" vertical-align: middle;"><p style="color: #FF3300;font-size: medium;margin-top: 10px;" ><strong>单价</strong></p></td>
+                <td th:text="${orderItem.getAllMoney()}" style=" vertical-align: middle;"><p style="color: #FF3300;font-size: medium;margin-top: 10px;" ><strong>总价</strong></p></td>
+                <td th:text="${orders.getOrderTime()}" style=" vertical-align: middle;">支付日期</td>
+                <td th:text="${orders.getReceiver().getAllReceiverInformation()}" style=" vertical-align: middle;">收货地址收货地址收货地址收货地址收货地址收货地址</td>
+                <td th:text="${orderItem.getOrderItemState()}" style=" vertical-align: middle;">订单状态</td>
+                <td style=" vertical-align: middle;"><button type="button" class="btn btn-default">改订单状态</button></td>
+            </tr>
+
             </tr>
             <!--end一条记录-->
-
-
 
             </tbody>
         </table>
     </div>
-
-
-
-
 
 
 </div><!--end of container-->

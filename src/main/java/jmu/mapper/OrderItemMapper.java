@@ -3,6 +3,7 @@ package jmu.mapper;
 import jmu.vo.OrderItem;
 import jmu.vo.Orders;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,6 +44,21 @@ public interface OrderItemMapper {
     public boolean updateOrderIDByOrderItemID(int orderItemID, int lastInsertID);
 
     @Select("select * from orderitem where orderID=#{orderID}")
+    @Results({
+            @Result(id = true, property = "orderItemID", column = "orderItemID"),
+            @Result(property = "sellerID", column = "sellerID"),
+            @Result(property = "commodityID", column = "commodityID"),
+            @Result(property = "orderID", column = "orderID"),
+            @Result(property = "orderItemAmount", column = "orderItemAmount"),
+            @Result(property = "allMoney", column = "allMoney"),
+            @Result(property = "orderItemState", column = "orderItemState"),
+
+
+            @Result(property = "commodity", column = "commodityID",
+                    javaType = jmu.vo.Commodity.class,
+                    one = @One(select="jmu.mapper.CommodityMapper.queryByCommodityID",
+                            fetchType = FetchType.LAZY))
+    })
     public List<OrderItem> queryByOrderIDfrom(int orderID);
 
 }

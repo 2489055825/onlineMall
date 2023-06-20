@@ -29,4 +29,13 @@ public class Receiver {
         String line =  this.receiverName + "  " + provinceName  + cityName + countyName + addressDetail;
         return line;
     }
+
+    public String getAllReceiverInformationNotPerson(){
+        System.out.println(this.toString());
+        String countyName = this.county.getCountyName();
+        String cityName = this.county.getCity().getCityName();
+        String provinceName = this.county.getCity().getProvince().getProvinceName();
+        String line =  provinceName  + cityName + countyName + addressDetail;
+        return line;
+    }
 }

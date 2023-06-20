@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/sellerFunction")
@@ -36,13 +33,39 @@ public class SellerController {
     public String allOrders(Model model){
         int sellerID = SignAndLoginController.USERSID;
         List<Orders> ordersList = ordersService.queryAllOrdersBySellerID(sellerID); //每一个order都要联系一个List<OrderItem>
-        List<OrderItem> orderItemList = new ArrayList<>();
-        for(Orders orders:ordersList){
-            orderItemList.addAll(orders.getOrderItemList());
+//        List<OrderItem> orderItemList = new ArrayList<>();
+//        for(Orders orders:ordersList){
+//            orderItemList.addAll(orders.getOrderItemList());
+//        }
+        List<Orders> filteredOrdersList = new ArrayList<>();
+        Set<Integer> processedOrderIDs = new HashSet<>();
+
+        for (Orders orders : ordersList) {
+            int orderID = orders.getOrderID();
+            if (!processedOrderIDs.contains(orderID)) {
+                filteredOrdersList.add(orders);
+                processedOrderIDs.add(orderID);
+            }
         }
 
-        model.addAttribute("orderItemList", orderItemList);
-        return "";
+        List<List<OrderItem>> orderItemListList = new ArrayList<>();
+        for(Orders orders:filteredOrdersList){
+            List<OrderItem> orderItemList = orders.getOrderItemList();
+            for(OrderItem orderItem:orderItemList){
+                if(orderItem.getSellerID() != sellerID){
+                    orderItemList.remove(orderItem);
+                }
+            }
+            orderItemListList.add(orderItemList);
+        }
+
+        for(int i = 0; i < filteredOrdersList.size(); i++){
+            filteredOrdersList.get(i).setOrderItemList(orderItemListList.get(i));
+        }
+
+        model.addAttribute("ordersList", filteredOrdersList);
+        model.addAttribute("orderItemListList", orderItemListList);
+        return "sellerPage-allOrder";
     }
 
     @RequestMapping(value = "/ordersUnsend", method = RequestMethod.GET)

@@ -57,6 +57,10 @@ public interface OrdersMapper {
                     javaType = List.class,
                     many = @Many(select="jmu.mapper.OrderItemMapper.queryByOrderIDfrom",
                             fetchType = FetchType.LAZY)),
+            @Result(property = "receiver", column = "receiverID",
+                    javaType = jmu.vo.Receiver.class,
+                    one = @One(select="jmu.mapper.ReceiverMapper.queryByReceiverID",
+                            fetchType = FetchType.LAZY))
 
     })
     public List<Orders> queryBySellerID(int sellerID);

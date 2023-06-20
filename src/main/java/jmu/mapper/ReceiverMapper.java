@@ -34,6 +34,25 @@ public interface ReceiverMapper {
     })
     public List<Receiver> queryByBuyerID(int BuyerID);
 
+    @Select("select * from receiver where receiverID=#{receiverID}")
+    @Results({
+            @Result(id = true, property = "receiverID", column = "receiverID"),
+            @Result(property = "buyerID", column = "buyerID"),
+            @Result(property = "countyID", column = "countyID"),
+            @Result(property = "addressDetail", column = "addressDetail"),
+            @Result(property = "receiverName", column = "receiverName"),
+
+            @Result(property = "buyer", column = "buyerID",
+                    javaType = jmu.vo.Buyer.class,
+                    one = @One(select="jmu.mapper.BuyerMapper.queryByBuyerIDfrom",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "county", column = "countyID",
+                    javaType = jmu.vo.County.class,
+                    one = @One(select="jmu.mapper.CountyMapper.queryByCountyID",
+                            fetchType = FetchType.LAZY))
+    })
+    public Receiver queryByReceiverID(int receiverID);
+
     @Delete("DELETE\n" +
             "FROM receiver\n" +
             "WHERE receiverID = #{receiverID}")
@@ -45,5 +64,7 @@ public interface ReceiverMapper {
 
     @Select("select * from receiver where receiverID=#{receiverID}")
     public Receiver queryByReceiverIDfrom(int receiverID);
+
+
 
 }
