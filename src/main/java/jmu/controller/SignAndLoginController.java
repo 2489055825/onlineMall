@@ -77,7 +77,7 @@ public class SignAndLoginController {
                 if(user.getIdentity().equals("buyer")){
                     path = "redirect:/buyerPage-home.html";
                 } else if (user.getIdentity().equals("seller")) {
-                    path = "sellerPage";
+                    path = "redirect:/sellerFunction/showCommodity";
                 }
             }
         }catch (Exception e){

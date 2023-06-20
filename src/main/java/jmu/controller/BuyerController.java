@@ -104,7 +104,7 @@ public class BuyerController {
         orderItem.setOrderItemState("未发货");
         orderItem.setCommodity(commodity);
         orderItem.setSeller(seller);
-        System.out.println(orderItem);
+
         boolean flag = orderItemServcie.insert(orderItem);
         if(!flag){//返回插入失败页面
             return "";
@@ -128,10 +128,15 @@ public class BuyerController {
         orderItemList.add(orderItem);
         model.addAttribute("orderItemList", orderItemList);
         float allMoney1 = 0;
+        List<Integer> orderItemIDList = new ArrayList<>();
         for(OrderItem orderItem1:orderItemList){
+            Integer id = orderItem1.getOrderItemID();
+            orderItemIDList.add(id);
             allMoney1 += orderItem1.getAllMoney() + orderItem1.getAllMoney()*0.01;
         }
-
+        IorderItemIDList iorderItemIDList = new IorderItemIDList();
+        iorderItemIDList.setOrderItemIDList(orderItemIDList);
+        model.addAttribute("orderItemIDList",iorderItemIDList);
         model.addAttribute("allMoney1", allMoney1);
         model.addAttribute("receiverList", receiverList);
         return "buyerPage-paymentConfirmation";
@@ -169,11 +174,14 @@ public class BuyerController {
         return "";
     }
 
-    @RequestMapping(value = "/submitOrder", method = RequestMethod.GET)
-    public String submitOrder(@RequestParam("orderItemIDList") List<Integer> orderItemIDList,
+    @RequestMapping(value = "/submitOrder", method = RequestMethod.POST)
+    public String submitOrder(@RequestParam("orderItemIDList") IorderItemIDList iorderItemIDList,
                               @RequestParam("receiverID") int receiverID,
                               Model model){
         int buyerID = SignAndLoginController.USERSID;
+
+        List<Integer> orderItemIDList = iorderItemIDList.getOrderItemIDList();
+        System.out.println("这是orderItemIDList" + orderItemIDList.toString());
 
         //插入order
         int allMoney = 0;
@@ -202,7 +210,7 @@ public class BuyerController {
             orderItemServcie.updateOrderIDByOrderItemID(IorderItemID,lastInsertID); //记得让shoppingCart为0
         }
 
-        return "";
+        return "redirect:/buyerFunction/myOrders";
     }
 
     //在我的订单找到这个人的所有order,然后显示在前端
@@ -211,7 +219,7 @@ public class BuyerController {
         int buyerID = SignAndLoginController.USERSID;
         List<Orders> ordersList = ordersService.queryByBuyerID(buyerID);//orders中包含orderItem
         model.addAttribute("ordersList", ordersList);
-        return "";
+        return "buyerPage-myOrderAllOrder";
     }
 
     @RequestMapping(value="confirmReceipt", method = RequestMethod.GET)
@@ -236,7 +244,7 @@ public class BuyerController {
                 }
             }
         }
-        model.addAttribute("IorderItemList", IorderItemList);
+        model.addAttribute("orderItemList", IorderItemList);
         return "";
     }
 

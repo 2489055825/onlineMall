@@ -75,9 +75,11 @@ public class SellerController {
     @RequestMapping(value = "/showCommodity", method = RequestMethod.GET)
     public String showCommodity(Model model){
         int sellerID = SignAndLoginController.USERSID;
+        Seller seller = sellerService.queryBySellerID(sellerID);
         List<Commodity> commodityList = commodityService.queryBySellerID(sellerID);
         model.addAttribute("commodityList",commodityList);
-        return "";
+        model.addAttribute("seller", seller);
+        return "sellerPage-allCommodity";
     }
 
     @RequestMapping(value = "/updateCommodity", method = RequestMethod.GET)
@@ -99,7 +101,7 @@ public class SellerController {
         if(!flag){
             return "";
         }
-        return "";
+        return "redirect:/sellerFunction/showCommodity";
     }
 
     @RequestMapping(value = "/deleteCommodity", method = RequestMethod.GET)
@@ -110,7 +112,7 @@ public class SellerController {
         if(!flag){
             return "";
         }
-        return "";
+        return "redirect:/sellerFunction/showCommodity";
     }
 
     @RequestMapping(value = "/insertCommodity", method = RequestMethod.GET)
@@ -130,7 +132,7 @@ public class SellerController {
         if(!flag){
             return "";
         }
-        return "";
+        return "redirect:/sellerFunction/showCommodity";
     }
 
     //显示商家信息
@@ -204,5 +206,14 @@ public class SellerController {
 
         return "";
     }
+
+    @RequestMapping(value = "/showUpdateSeller", method = RequestMethod.GET)
+    public String showUpdateSeller(@RequestParam("commodityID") int commodityID,
+                               Model model){
+        int sellerID = SignAndLoginController.USERSID;
+        model.addAttribute("commodityID",commodityID);
+        return "sellerPage-updateCommodity";
+    }
+
 
 }

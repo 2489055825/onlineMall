@@ -42,11 +42,11 @@ public interface CommodityMapper {
     @Select("select * from commodity where sellerID=#{sellerID}")
     public List<Commodity> queryBySellerID(int sellerID);
 
-    @Update("update commodity\n" +
-            "set orderItemID=#{orderItemID},sellerID=#{sellerID}, commodityName=#{commodityName}," +
-            "commodityPhoto=#{commodityPhoto},\n" +
-            "commodityPrice=#{commodityPrice}, inventory=#{inventory}" +
-            "where commodityID=#{commodityID}")
+    @Update("update commodity \n" +
+            " set sellerID=#{sellerID}, commodityName=#{commodityName}, " +
+            " commodityPhoto=#{commodityPhoto}, \n" +
+            " commodityPrice=#{commodityPrice}, inventory=#{inventory} " +
+            " where commodityID=#{commodityID} ")
     public boolean updateByCommodityID(Commodity commodity);
 
     @Delete("DELETE\n" +
