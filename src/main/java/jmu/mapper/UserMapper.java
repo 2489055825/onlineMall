@@ -5,6 +5,7 @@ import jmu.vo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +29,8 @@ public interface UserMapper {
     @Select("select * from user")
     public List<User> queryAll();
 
-
+    @Update("update user \n" +
+            " set securityQuestion=#{question} , securityAnswer=#{answer}" +
+            " where userID=#{sellerID} ")
+    boolean updateQuestionByID(int sellerID, String question, String answer);
 }

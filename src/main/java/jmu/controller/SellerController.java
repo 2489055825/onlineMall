@@ -218,16 +218,19 @@ public class SellerController {
 
     @RequestMapping(value = "/updateSeller", method = RequestMethod.GET)
     public String updateSeller(@RequestParam("shopName") String shopName,
+                               @RequestParam("question") String question,
+                               @RequestParam("answer") String answer,
                                Model model){
         int sellerID = SignAndLoginController.USERSID;
         Seller seller = new Seller();
         seller.setSellerID(sellerID);
         seller.setShopName(shopName);
+        boolean flag1 = userService.updateQuestionByID(sellerID,question,answer);
         boolean flag = sellerService.update(seller);
-        if(!flag){
+        if(!flag || !flag1){
             return "";
         }
-        return "";
+        return "redirect:/sellerFunction/showSeller";
     }
 
     @RequestMapping(value = "/myExcel", method = RequestMethod.GET)
@@ -279,6 +282,7 @@ public class SellerController {
         return "";
     }
 
+    //其实是显示更新商品
     @RequestMapping(value = "/showUpdateSeller", method = RequestMethod.GET)
     public String showUpdateSeller(@RequestParam("commodityID") int commodityID,
                                Model model){
@@ -287,5 +291,14 @@ public class SellerController {
         return "sellerPage-updateCommodity";
     }
 
+    @RequestMapping(value = "/showUpdateInformation", method = RequestMethod.GET)
+    public String showUpdateInformation(Model model){
+        int sellerID = SignAndLoginController.USERSID;
+        Seller seller = sellerService.queryBySellerID(sellerID);
+        User user = userService.queryBySellerID(sellerID);
+        model.addAttribute("seller",seller);
+        model.addAttribute("user",user);
+        return "sellerPage-updateInformation";
+    }
 
 }

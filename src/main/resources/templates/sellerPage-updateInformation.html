@@ -12,8 +12,7 @@
     <script th:src="@{https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js}"></script>
     <script th:src="@{https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js}"></script>
     <![endif]-->
-
-    <title>商家--个人信息</title>
+    <title>商家--修改个人信息</title>
     <style>
         .card {
             border: none;
@@ -93,6 +92,8 @@
             color: #fff;
             display: inline-block;
         }
+
+
     </style>
 
 
@@ -114,7 +115,6 @@
             </button>
             <a href="#" class="navbar-brand" style="padding: 0px 15px 0px 15px;">
                 <img th:src="@{/images/home.png}" class="img-responsive" style="width:150px;height:50px;" ></img>
-
             </a>
         </div>
 
@@ -167,8 +167,8 @@
     <div class="col-md-3"></div>
 
     <div class="col-md-5">
-        <legend class="text-center">我的信息</legend>
-        <form class="form-horizontal">
+        <legend class="text-center">修改信息</legend>
+        <form class="form-horizontal" action="updateSeller">
 
             <div class="card">
                 <div class="card-body">
@@ -180,27 +180,40 @@
                         <div class="col-md-12">
                             <p class="card-text">商家ID：<span th:text="${seller.getSellerID()}" class="merchant-id">123456</span></p>
                         </div>
+
                         <div class="col-md-12">
-                            <p class="card-text">店铺名：<span th:text="${seller.getShopName()}" class="merchant-id">淘小菜店铺</span></p>
+                            <p class="card-text">店铺名：</p>
+                            <input style="height: 40px;" type="text" name="shopName" class="form-control" placeholder="请输入修改后的店铺名">
                         </div>
+
                         <div class="col-md-12">
-                            <p class="card-text">账户名：<span th:text="${user.getAccount()}" class="merchant-id">淘小菜店铺</span></p>
+                            <p class="card-text">密保问题：</p>
+                            <select id="selectedCourse" name="question" class="form-control"  style="height:40px; ">
+                                <option value="" disabled selected>请选择您的密保问题</option>
+                                <option value="您母亲的姓名是什么？">您母亲的姓名是什么？</option>
+                                <option value="您父亲的出生地是哪里？">您父亲的出生地是哪里？</option>
+                                <option value="您最喜欢的宠物的名字是什么？">您最喜欢的宠物的名字是什么？
+                                </option>
+                            </select>
                         </div>
+
                         <div class="col-md-12">
-                            <p class="card-text">密保问题：<span th:text="${user.getSecurityQuestion()}" class="merchant-id">淘小菜店铺</span></p>
+                            <p class="card-text">密保答案：</p>
+                            <input style="height: 40px;" type="text" name="answer" class="form-control" placeholder="请输入修改后的密保答案">
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="text-center">
+                <!--      可以直接跳回商家信息界面-->
+                <button class="btn" type="submit" style="background-color:  #FE9F38; color: #fff; border-radius: 20px; padding: 10px 20px;">保存修改</button>
+            </div>
         </form>
 
-        <div class="text-center">
-            <a href="showUpdateInformation"><button class="btn" style="background-color:  #FE9F38; color: #fff; border-radius: 20px; padding: 10px 20px;">修改信息</button></a>
-        </div>
+
 
     </div>
     <div class="col-md-3"></div>
-
 
 </div><!--end of container-->
 

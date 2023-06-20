@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.queryByUserID(sellerID);
         return user;
     }
+
+    @Override
+    public boolean updateQuestionByID(int sellerID, String question, String answer) {
+        boolean flag = userMapper.updateQuestionByID(sellerID,question,answer);
+        return flag;
+    }
 }
