@@ -272,14 +272,18 @@ public class SellerController {
             int totalQuantity = totalQuantityMap.get(commodityID);
             TotalSeller totalSeller = new TotalSeller();
             totalSeller.setCommodityID(commodityID);
+            Commodity commodity = commodityService.queryByCommodityID(commodityID);
+            totalSeller.setCommodity(commodity);
             totalSeller.setTotalSales(totalSales);
             totalSeller.setTotalQuantity(totalQuantity);
             totalSellerList.add(totalSeller);
         }
 
+        Seller seller = sellerService.queryBySellerID(sellerID);
+        model.addAttribute("seller",seller);
         model.addAttribute("totalSellerList",totalSellerList);
 
-        return "";
+        return "sellerPage-excel";
     }
 
     //其实是显示更新商品
