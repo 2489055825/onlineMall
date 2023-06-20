@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <!--导入bootstrap的样式和js以及1.9版本以上的JQuery-->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/bootstrap/jquery-3.5.1.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!--  <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css">&lt;!&ndash;字体图标&ndash;&gt;-->
+    <!--[if lt IE 9]>
+    <script th:src="@{https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js}"></script>
+    <script th:src="@{https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js}"></script>
+    <![endif]-->
+
+    <title>商家--个人信息</title>
+    <style>
+        .card {
+            border: none;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+            max-width: 385px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-body {
+            padding: 25px 30px;
+            position: relative;
+            background: linear-gradient(to bottom right,#FE9F38, #ffdf63, #f6c76f, #FFC723,#FE9F38 );
+
+        }
+
+        .card-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #fff;
+            position: absolute;
+            top: -45px;
+            left: 54px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .icons {
+            position: absolute;
+            top: 35px;
+            right: 30px;
+            opacity: 0.7;
+        }
+
+        .icons span {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-image: url("https://img.icons8.com/ios-glyphs/30/ffffff/edit.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-bottom: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .icons span:hover {
+            transform: rotate(360deg);
+            opacity: 1;
+        }
+
+        .row div {
+            padding-right: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .card-text {
+            font-size: 21px;
+            line-height: 1.8;
+            color: #fff;
+            margin-bottom: 5px;
+            font-weight: 400;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .merchant-id {
+            font-weight: 600;
+            color: #fff;
+            display: inline-block;
+        }
+    </style>
+
+
+
+</head>
+<body>
+
+<!--导航栏,设置导航栏的样式为默认navbar-default，而navbar-inverse，,nav里面加上navbar-fixed-top试一下导致导航栏顶部下面以部门区域覆盖，后面我加了br换行-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my_nav" aria-expanded="false">
+                <!--兼容性使用-->
+                <span class="sr-only">Toggle navigation</span>
+                <!--当在移动访问时，右上角出现按钮，表示按钮上的三根横线-->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand" style="padding: 0px 15px 0px 15px;">
+                <img th:src="@{/images/home.png}" class="img-responsive" style="width:150px;height:50px;" ></img>
+
+            </a>
+        </div>
+
+        <!--导航条菜单-->
+        <div class="collapse navbar-collapse" id="my_nav">
+            <ul class="nav navbar-nav">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <li class="active"><a href="#">淘小菜网首页</a></li>
+                <li><a href="#">&nbsp; &nbsp;&nbsp; &nbsp;  商城</a></li>
+                <li><a href="#">&nbsp; &nbsp; 活动</a></li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索您的商品&订单" style="width: 350px"/>
+                    <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">搜索</button>
+          </span>
+                </div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li><a href="#">&nbsp; &nbsp;我的报表 <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;登录&nbsp; <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;注册&nbsp; <span  style="font-size:15px;"></span></a></li>
+                <li><a href="#">&nbsp;退出登录&nbsp; <span  style="font-size:15px;"></span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br>
+<br><br>
+
+<!--container容器是页面左右两边预留空白的容器-->
+<!--container-fluid容器是100%宽度的容器-->
+
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">我的商品&订单管理</a>
+            </div>
+        </div><!-- /.container-fluid -->
+        <ul class="nav nav-pills nav-justified">
+            <li><a th:href="@{sellerPage-allCommodity.html}">全部商品</a></li>
+            <li ><a th:href="@{sellerPage-allOrder.html} ">所有订单</a></li>
+            <li><a th:href="@{sellerPage-orderUnsend.html}">未送达订单</a></li>
+            <li class="active"><a th:href="@{sellerPage-myInformation.html}">商家信息</a></li>
+        </ul>
+    </nav>
+
+    <div class="col-md-3"></div>
+
+    <div class="col-md-5">
+        <legend class="text-center">我的信息</legend>
+        <form class="form-horizontal">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">商家信息编辑</h5>
+                    <div class="icons">
+                        <span></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="card-text">商家ID：<span th:text="${seller.getSellerID()}" class="merchant-id">123456</span></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="card-text">店铺名：<span th:text="${seller.getShopName()}" class="merchant-id">淘小菜店铺</span></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="card-text">账户名：<span th:text="${user.getAccount()}" class="merchant-id">淘小菜店铺</span></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="card-text">密保问题：<span th:text="${user.getSecurityQuestion()}" class="merchant-id">淘小菜店铺</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="text-center">
+            <a href="sellerPage-updateInformation.html"><button class="btn" style="background-color:  #FE9F38; color: #fff; border-radius: 20px; padding: 10px 20px;">修改信息</button></a>
+        </div>
+
+    </div>
+    <div class="col-md-3"></div>
+
+
+
+
+
+
+
+
+
+
+
+</div><!--end of container-->
+
+</body>
+</html>

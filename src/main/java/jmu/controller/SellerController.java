@@ -26,6 +26,8 @@ public class SellerController {
     private BuyerService buyerService;
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private UserService userService;
 
 
     //所有订单功能
@@ -208,8 +210,10 @@ public class SellerController {
     public String showSeller(Model model){
         int sellerID = SignAndLoginController.USERSID;
         Seller seller = sellerService.queryBySellerID(sellerID);
+        User user = userService.queryBySellerID(sellerID);
         model.addAttribute("seller",seller);
-        return "";
+        model.addAttribute("user",user);
+        return "sellerPage-myInformation";
     }
 
     @RequestMapping(value = "/updateSeller", method = RequestMethod.GET)
