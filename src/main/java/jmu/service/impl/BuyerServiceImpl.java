@@ -34,6 +34,6 @@ public class BuyerServiceImpl implements BuyerService {
     @Override
     public Buyer queryByBuyerID(int buyerID) {
         Buyer buyer = buyerMapper.queryByBuyerIDfrom(buyerID);
-        return null;
+        return buyer;
     }
 }

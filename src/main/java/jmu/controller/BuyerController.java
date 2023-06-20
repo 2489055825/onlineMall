@@ -317,7 +317,7 @@ public class BuyerController {
         model.addAttribute("buyer", buyer);
         model.addAttribute("sum", sum);
         model.addAttribute("money", money);
-        return "";
+        return "buyerPage-excel";
     }
 
 }
